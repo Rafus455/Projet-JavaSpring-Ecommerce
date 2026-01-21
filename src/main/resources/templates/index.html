@@ -1,11 +1,54 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Index</title>
+    <link rel="stylesheet" th:href="@{/css/style1.css}">
 </head>
 <body>
-    <p>HELLO</p>
+
+    <div th:replace="header :: header"></div>
+
+	<img th:src="@{/images/find_pc.png}" alt="Produit">
+	
+
+    <!-- NEW ITEM -->
+    <section class="items-section">
+        <h2>New item</h2>
+
+        <div class="items-container">
+            <div class="item-card">
+            <img th:src="@{/images/poulpe.webp}" alt="Produit">
+            </div>
+           <div class="item-card">
+           <img th:src="@{/images/poulpe.webp}" alt="Produit">
+           </div>
+            <div class="item-card">
+            <img th:src="@{/images/poulpe.webp}" alt="Produit">
+            </div>
+        </div>
+
+        <div class="separator"></div>
+    </section>
+
+    <!-- BEST ITEM -->
+    <section class="items-section">
+        <h2>Best item</h2>
+
+        <div class="items-container">
+            <div class="item-card">
+            <img th:src="@{/images/poulpe.webp}" alt="Produit">
+            </div>
+            <div class="item-card">
+            <img th:src="@{/images/poulpe.webp}" alt="Produit">
+            </div>
+            <div class="item-card">
+            <img th:src="@{/images/poulpe.webp}" alt="Produit">
+            </div>
+        </div>
+
+        <div class="separator"></div>
+    </section>
+
 </body>
 </html>

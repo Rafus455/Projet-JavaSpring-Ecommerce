@@ -1,0 +1,116 @@
+header {
+    background-color: blue;
+    padding: 10px 30px;
+}
+
+/* Conteneur principal */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.logo img {
+    height: 60px; /* 👈 clé du problème actuel */
+}
+
+/* Navigation */
+.main-nav {
+    display: flex;
+    gap: 30px;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.main-nav a:hover {
+    text-decoration: underline;
+}
+
+/* Icônes à droite */
+.actions {
+    display: flex;
+    gap: 20px;
+}
+
+.actions img {
+    height: 28px;
+    cursor: pointer;
+}
+
+/* Section New item */
+.new-items {
+    padding: 40px 60px;
+    text-align: center;
+}
+
+.new-items h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+/* Conteneur des items */
+.items-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+/* Carte produit */
+.item-card {
+    width: 220px;
+    height: 160px;
+    background-color: #e0e0e0; /* gris clair comme sur l'image */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Image produit */
+.item-card img {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+/* Section New item */
+.new-items {
+    padding: 40px 60px;
+    text-align: center;
+}
+
+.new-items h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+/* Conteneur des items */
+.items-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+/* Carte produit */
+.item-card {
+    width: 220px;
+    height: 160px;
+    background-color: #e0e0e0; /* gris clair comme sur l'image */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Image produit */
+.item-card img {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+h2 {
+	margin-left: 900px;
+}
