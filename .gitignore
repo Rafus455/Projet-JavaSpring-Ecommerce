@@ -31,14 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### OS ###
-.DS_Store
-Thumbs.db
-
-### Java ###
-*.class
-*.log
-*.jar
-*.war
-*.ear
