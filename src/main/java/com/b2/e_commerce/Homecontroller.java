@@ -1,4 +1,4 @@
-package controller.MVC;
+package com.b2.e_commerce;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,5 +11,7 @@ public class Homecontroller {
 		return "index";
 
 	}
+	
+	
 
 }
