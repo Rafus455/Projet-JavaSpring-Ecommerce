@@ -1,4 +1,4 @@
-package com.b2.e_commerce.DTO;
+package com.b2.e_commerce.dto;
 
 public class LoginRequest {
     private String email;

@@ -1,8 +1,8 @@
 package com.b2.e_commerce.controller;
 
-import com.b2.e_commerce.DTO.LoginRequest;
-import com.b2.e_commerce.DTO.RegisterRequest;
-import com.b2.e_commerce.DTO.LoginResponse;
+import com.b2.e_commerce.dto.LoginRequest;
+import com.b2.e_commerce.dto.RegisterRequest;
+import com.b2.e_commerce.dto.LoginResponse;
 import com.b2.e_commerce.entity.Role;
 import com.b2.e_commerce.entity.User;
 import com.b2.e_commerce.repository.RoleRepository;
