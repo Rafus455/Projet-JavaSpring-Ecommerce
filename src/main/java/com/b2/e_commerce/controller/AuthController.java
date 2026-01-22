@@ -1,59 +1,81 @@
 package com.b2.e_commerce.controller;
 
+import com.b2.e_commerce.DTO.LoginRequest;
+import com.b2.e_commerce.DTO.RegisterRequest;
+import com.b2.e_commerce.DTO.LoginResponse;
 import com.b2.e_commerce.entity.Role;
 import com.b2.e_commerce.entity.User;
 import com.b2.e_commerce.repository.RoleRepository;
 import com.b2.e_commerce.repository.UserRepository;
+import com.b2.e_commerce.security.JwtUtil;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping("/api/auth")
 public class AuthController {
 
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authManager;
+    private final UserRepository userRepo;
+    private final RoleRepository roleRepo;
+    private final PasswordEncoder encoder;
+    private final JwtUtil jwtUtil;
 
     public AuthController(
-            UserRepository userRepository,
-            RoleRepository roleRepository,
-            PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
+            AuthenticationManager authManager,
+            UserRepository userRepo,
+            RoleRepository roleRepo,
+            PasswordEncoder encoder,
+            JwtUtil jwtUtil) {
+        this.authManager = authManager;
+        this.userRepo = userRepo;
+        this.roleRepo = roleRepo;
+        this.encoder = encoder;
+        this.jwtUtil = jwtUtil;
     }
 
-    // LOGIN 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
+    // LOGIN JWT
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(
+            @RequestBody LoginRequest request) {
+
+        Authentication auth = authManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                request.getEmail(),
+                request.getPassword()
+            )
+        );
+
+        String token = jwtUtil.generateToken(auth.getName());
+
+        return ResponseEntity.ok(new LoginResponse(token));
     }
 
-    // REGISTER 
-    @GetMapping("/register")
-    public String register(Model model) {
-        model.addAttribute("user", new User());
-        return "register";
-    }
-
+    // REGISTER
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user) {
-    	
-    	if (userRepository.findByMail(user.getMail()).isPresent()) {
-            return "redirect:/register?error";
+    public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
+
+        if (userRepo.findByMail(req.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest().body("Email already exists");
         }
 
-        Role role = roleRepository.findByRole("USER")
+        Role role = roleRepo.findByRole("USER")
                 .orElseThrow(() -> new RuntimeException("Role USER not found"));
 
-        user.setRole(role);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User u = new User();
+        u.setMail(req.getEmail());
+        u.setPassword(encoder.encode(req.getPassword()));
+        u.setRole(role);
 
-        userRepository.save(user);
+        userRepo.save(u);
 
-        return "redirect:/login";
+        return ResponseEntity.ok().build();
     }
 }
+
+

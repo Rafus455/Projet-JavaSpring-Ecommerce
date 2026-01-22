@@ -9,16 +9,16 @@
 <div class="auth-container">
     <h2>Connexion</h2>
 
-    <div th:if="${param.error}" class="error">
+    <div id="error" class="error" style="display:none;">
         Identifiants invalides
     </div>
 
-    <form th:action="@{/login}" method="post">
+    <form id="loginForm">
         <label>Email</label>
-        <input type="text" name="username" required>
+        <input type="email" id="email" required>
 
         <label>Mot de passe</label>
-        <input type="password" name="password" required>
+        <input type="password" id="password" required>
 
         <button type="submit">Se connecter</button>
     </form>
@@ -28,6 +28,31 @@
         <a th:href="@{/register}">Créer un compte</a>
     </p>
 </div>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+    });
+
+    if (response.ok) {
+        const token = await response.text();
+        localStorage.setItem("jwt", token);
+        window.location.href = "/index";
+    } else {
+        document.getElementById("error").style.display = "block";
+    }
+});
+</script>
 
 </body>
 </html>

@@ -9,23 +9,22 @@
 <div class="auth-container">
     <h2>Inscription</h2>
 
-    <div th:if="${param.error}" class="error">
-        Email déjà utilisé
+    <div id="error" class="error" style="display:none;">
+        Erreur lors de l'inscription
     </div>
 
-    <form th:action="@{/register}" th:object="${user}" method="post">
-
+    <form id="registerForm">
         <label>Nom</label>
-        <input type="text" th:field="*{name}" required>
+        <input type="text" id="name" required>
 
         <label>Prénom</label>
-        <input type="text" th:field="*{firstname}" required>
+        <input type="text" id="firstname" required>
 
         <label>Email</label>
-        <input type="email" th:field="*{mail}" required>
+        <input type="email" id="email" required>
 
         <label>Mot de passe</label>
-        <input type="password" th:field="*{password}" required>
+        <input type="password" id="password" required>
 
         <button type="submit">Créer le compte</button>
     </form>
@@ -34,6 +33,31 @@
         <a th:href="@{/login}">Retour à la connexion</a>
     </p>
 </div>
+
+<script>
+document.getElementById("registerForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const data = {
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value
+    };
+
+    const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+        window.location.href = "/login";
+    } else {
+        document.getElementById("error").style.display = "block";
+    }
+});
+</script>
 
 </body>
 </html>
