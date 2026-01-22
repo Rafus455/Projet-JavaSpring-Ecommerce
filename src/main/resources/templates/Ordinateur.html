@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" th:href="@{/css/style2.css}">
+</head>
+<body>
+
+   <header>
+        <div class="header-container">
+            <div class="logo">
+            	<p>SHOP</p>>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="#home">Accueil</a>
+                <a href="#new">Ordinateur</a>
+                <a href="#best">Pc Portable</a>
+                <a href="#contact">Téléphone</a>
+            </nav>
+            
+            <div class="actions">
+                <div class="icon">🔍</div>
+                <div class="icon">
+                	<img th:src="@{/images/user.png}" alt="Logo">
+                </div>
+                <div class="icon">
+                	<img th:src="@{/images/panier.png}" alt="Logo">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="#home">Accueil</a> / Ordinateur
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>Ordinateurs</h1>
+        <p>Découvrez notre sélection d'ordinateurs performants pour tous vos besoins</p>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        
+        <!-- Sidebar Filters -->
+        <aside class="sidebar">
+            <div class="filter-section">
+                <h3>Prix</h3>
+                <div class="price-range">
+                    <div class="price-inputs">
+                        <input type="number" class="price-input" placeholder="Min" value="0">
+                        <span>-</span>
+                        <input type="number" class="price-input" placeholder="Max" value="3000">
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Type</h3>
+                <div class="filter-option">
+                    <input type="checkbox" id="desktop">
+                    <label for="desktop">Ordinateur de bureau (12)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="laptop">
+                    <label for="laptop">Ordinateur portable (8)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="workstation">
+                    <label for="workstation">Station de travail (5)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="gaming">
+                    <label for="gaming">Gaming (9)</label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Processeur</h3>
+                <div class="filter-option">
+                    <input type="checkbox" id="intel-i9">
+                    <label for="intel-i9">Intel Core i9 (6)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="intel-i7">
+                    <label for="intel-i7">Intel Core i7 (10)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="amd-ryzen9">
+                    <label for="amd-ryzen9">AMD Ryzen 9 (5)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="amd-ryzen7">
+                    <label for="amd-ryzen7">AMD Ryzen 7 (8)</label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Mémoire RAM</h3>
+                <div class="filter-option">
+                    <input type="checkbox" id="ram-16">
+                    <label for="ram-16">16 Go (12)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="ram-32">
+                    <label for="ram-32">32 Go (15)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="ram-64">
+                    <label for="ram-64">64 Go (7)</label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Stockage</h3>
+                <div class="filter-option">
+                    <input type="checkbox" id="storage-512">
+                    <label for="storage-512">512 Go SSD (8)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="storage-1tb">
+                    <label for="storage-1tb">1 To SSD (18)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="storage-2tb">
+                    <label for="storage-2tb">2 To SSD (8)</label>
+                </div>
+            </div>
+
+            <button class="apply-filters-btn">Appliquer les filtres</button>
+        </aside>
+
+        <!-- Products Section -->
+        <div class="products-section">
+            
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <div class="results-count">
+                    <strong>34 produits</strong> trouvés
+                </div>
+                
+                <div class="sort-options">
+                    <label>Trier par :</label>
+                    <select class="sort-select">
+                        <option>Pertinence</option>
+                        <option>Prix croissant</option>
+                        <option>Prix décroissant</option>
+                        <option>Meilleures ventes</option>
+                        <option>Nouveautés</option>
+                    </select>
+                </div>
+
+                <div class="view-toggle">
+                    <button class="view-btn active">⊞</button>
+                    <button class="view-btn">☰</button>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid">
+                
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        💻
+                        <span class="product-badge new">Nouveau</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Gaming</div>
+                        <h3 class="product-name">Ordinateur Gaming Ultra X</h3>
+                        <p class="product-specs">Intel i9-14900K • 32 Go RAM • RTX 4080 • 1 To SSD</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(152)</span>
+                        </div>
+                        <div class="product-bottom">
+                            <div>
+                                <span class="old-price">1 899,99 €</span>
+                                <div class="product-price">1 699,99 €</div>
+                            </div>
+                            <button class="add-to-cart-icon">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        💼
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Professionnel</div>
+                        <h3 class="product-name">Station de Travail Pro</h3>
+                        <p class="product-specs">Intel Xeon • 64 Go RAM • RTX A4000 • 2 To SSD</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(89)</span>
+                        </div>
+                        <div class="product-bottom">
+                            <div class="product-price">2 499,99 €</div>
+                            <button class="add-to-cart-icon">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        🖥️
+                        <span class="product-badge">-20%</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Bureau</div>
+                        <h3 class="product-name">PC Bureau Performance</h3>
+                        <p class="product-specs">Intel i7-13700 • 16 Go RAM • GTX 1660 • 512 Go SSD</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">(203)</span>
+                        </div>
+                        <div class="product-bottom">
+                            <div>
+                                <span class="old-price">999,99 €</span>
+                                <div class="product-price">799,99 €</div>
+                            </div>
+                            <button class="add-to-cart-icon">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-image">⚡</div>
+                    <div class="product-info">
+                        <div class="product-category">Gaming</div>
+                        <h3 class="product-name">PC Gaming Titan</h3>
+                        <p class="product-specs">AMD Ryzen 9 • 32 Go RAM • RTX 4090 • 2 To SSD</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(176)</span>
+                        </div>
+                        <div class="product-bottom">
+                            <div class="product-price">2 999,99 €</div>
+                            <button class="add-to-cart-icon">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        💻
+                        <span class="product-badge new">Nouveau</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Portable</div>
+                        <h3 class="product-name">Laptop Elite Business</h3>
+                        <p class="product-specs">Intel i7-13800H • 16 Go RAM • 15.6" • 1 To SSD</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(94)</span>
+                        </div>
+                        <div class="product-bottom">
+                            <div class="product-price">1 399,99 €</div>
+                            <button class="add-to-cart-icon">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="product-image">🎮</div>
+                    <div class="product-info">
+                        <div class="product-category">Gaming</div>
+                        <h3 class="product-name">Console Gaming PC</h3>
+                        <p class="product-specs">AMD Ryzen 7 • 16 Go RAM • RTX 4060 • 1 To SSD</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">(128)</span>
+                        </div>
+                        <div class="product-bottom">
+                            <div class="product-price">1 199,99 €</div>
+                            <button class="add-to-cart-icon">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        🖥️
+                        <span class="product-badge">-15%</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Bureau</div>
+                        <h3 class="product-name">PC Multimédia Premium</h3>
+                        <p class="product-specs">Intel i5-13400 • 16 Go RAM • GTX 1650 • 512 Go SSD</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-count">(167)</span>
+                        </div>
+                        <div class="product-bottom">
+                            <div>
+                                <span class="old-price">699,99 €</span>
+                                <div class="product-price">599,99 €</div>
+                            </div>
+                            <button class="add-to-cart-icon">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="product-card">
+                    <div class="product-image">💼</div>
+                    <div class="product-info">
+                        <div class="product-category">Professionnel</div>
+                        <h3 class="product-name">Workstation Creator</h3>
+                        <p class="product-specs">AMD Threadripper • 128 Go RAM • RTX A5000 • 4 To SSD</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(42)</span>
+                        </div>
+                        <div class="product-bottom">
+                            <div class="product-price">4 999,99 €</div>
+                            <button class="add-to-cart-icon">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 9 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        ⚡
+                        <span class="product-badge new">Nouveau</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Gaming</div>
+                        <h3 class="product-name">PC Gaming Compact</h3>
+                        <p class="product-specs">Intel i5-13600K • 16 Go RAM • RTX 4060 Ti • 1 To SSD</p>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(215)</span>
+                        </div>
+                        <div class="product-bottom">
+                            <div class="product-price">1 099,99 €</div>
+                            <button class="add-to-cart-icon">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pagination">
+                <button class="page-btn">«</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">4</button>
+                <button class="page-btn">»</button>
+            </div>
+
+        </div>
+    </div>
+    
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 SHOP - Tous droits réservés</p>
+        <p>Contactez-nous : contact@shop.com</p>
+    </footer>
+</body>
+</html>

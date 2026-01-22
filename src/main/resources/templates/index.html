@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/style1.css}">
 </head>
 <body>
 
    <header>
         <div class="header-container">
-            <div class="logo">SHOP</div>
+            <div class="logo">
+            	<p>SHOP</p>
+            </div>
             
             <nav class="main-nav">
                 <a href="#home">Accueil</a>
-                <a href="#new">Ordinateur</a>
+				<a th:href="@{/ordinateur}">Ordinateur</a>
                 <a href="#best">Pc Portable</a>
                 <a href="#contact">Téléphone</a>
             </nav>
