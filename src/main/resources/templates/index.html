@@ -7,48 +7,128 @@
 </head>
 <body>
 
-    <div th:replace="header :: header"></div>
-
-	<img th:src="@{/images/find_pc.png}" alt="Produit">
-	
-
-    <!-- NEW ITEM -->
-    <section class="items-section">
-        <h2>New item</h2>
-
-        <div class="items-container">
-            <div class="item-card">
-            <img th:src="@{/images/poulpe.webp}" alt="Produit">
-            </div>
-           <div class="item-card">
-           <img th:src="@{/images/poulpe.webp}" alt="Produit">
-           </div>
-            <div class="item-card">
-            <img th:src="@{/images/poulpe.webp}" alt="Produit">
+   <header>
+        <div class="header-container">
+            <div class="logo">SHOP</div>
+            
+            <nav class="main-nav">
+                <a href="#home">Accueil</a>
+                <a href="#new">Ordinateur</a>
+                <a href="#best">Pc Portable</a>
+                <a href="#contact">Téléphone</a>
+            </nav>
+            
+            <div class="actions">
+                <div class="icon">🔍</div>
+                <div class="icon">
+                	<img th:src="@{/images/user.png}" alt="Logo">
+                </div>
+                <div class="icon">
+                	<img th:src="@{/images/panier.png}" alt="Logo">
+                </div>
             </div>
         </div>
+    </header>
 
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+        <img th:src="@{/images/find_pc.png}" alt="Logo">
+            <h1>Bienvenue sur notre boutique</h1>
+            <p>Découvrez nos produits exceptionnels</p>
+            <button class="hero-btn">Découvrir</button>
+        </div>
+    </section>
+
+    <!-- New Items -->
+    <section class="items-section" id="new">
+        <h2>Nouveautés</h2>
+        <div class="items-container">
+            <div class="item-card">
+                <div class="item-image">
+                	<img th:src="@{/images/poulpe.webp}" alt="Logo">
+                </div>
+                <div class="item-info">
+                    <h3>Produit Gaming</h3>
+                    <p>Description du produit nouvelle génération</p>
+                    <div class="item-price">49,99 €</div>
+                    <button class="add-to-cart">Ajouter au panier</button>
+                </div>
+            </div>
+            
+            <div class="item-card">
+                <div class="item-image">
+                	<img th:src="@{/images/poulpe.webp}" alt="Logo">
+                </div>
+                <div class="item-info">
+                    <h3>Ordinateur Pro</h3>
+                    <p>Performances exceptionnelles pour tous</p>
+                    <div class="item-price">899,99 €</div>
+                    <button class="add-to-cart">Ajouter au panier</button>
+                </div>
+            </div>
+            
+            <div class="item-card">
+                <div class="item-image">
+                	<img th:src="@{/images/poulpe.webp}" alt="Logo">
+                </div>
+                <div class="item-info">
+                    <h3>Casque Audio</h3>
+                    <p>Son immersif et qualité premium</p>
+                    <div class="item-price">129,99 €</div>
+                    <button class="add-to-cart">Ajouter au panier</button>
+                </div>
+            </div>
+        </div>
         <div class="separator"></div>
     </section>
 
-    <!-- BEST ITEM -->
-    <section class="items-section">
-        <h2>Best item</h2>
-
+    <!-- Best Items -->
+    <section class="items-section" id="best">
+        <h2>Meilleures ventes</h2>
         <div class="items-container">
             <div class="item-card">
-            <img th:src="@{/images/poulpe.webp}" alt="Produit">
+                <div class="item-image">
+                	<img th:src="@{/images/poulpe.webp}" alt="Logo">
+                </div>
+                <div class="item-info">
+                    <h3>Smartphone Elite</h3>
+                    <p>Technologie de pointe à portée de main</p>
+                    <div class="item-price">799,99 €</div>
+                    <button class="add-to-cart">Ajouter au panier</button>
+                </div>
             </div>
+            
             <div class="item-card">
-            <img th:src="@{/images/poulpe.webp}" alt="Produit">
+                <div class="item-image">
+                	<img th:src="@{/images/poulpe.webp}" alt="Logo">
+                </div>
+                <div class="item-info">
+                    <h3>Montre Connectée</h3>
+                    <p>Restez connecté en toute élégance</p>
+                    <div class="item-price">299,99 €</div>
+                    <button class="add-to-cart">Ajouter au panier</button>
+                </div>
             </div>
+            
             <div class="item-card">
-            <img th:src="@{/images/poulpe.webp}" alt="Produit">
+                <div class="item-image">
+                	<img th:src="@{/images/poulpe.webp}" alt="Logo">
+                </div>
+                <div class="item-info">
+                    <h3>Appareil Photo</h3>
+                    <p>Capturez vos meilleurs moments</p>
+                    <div class="item-price">1299,99 €</div>
+                    <button class="add-to-cart">Ajouter au panier</button>
+                </div>
             </div>
         </div>
-
-        <div class="separator"></div>
     </section>
 
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 SHOP - Tous droits réservés</p>
+        <p>Contactez-nous : contact@shop.com</p>
+    </footer>
 </body>
 </html>
