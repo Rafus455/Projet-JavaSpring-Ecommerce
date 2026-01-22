@@ -23,7 +23,7 @@ public class Product {
 
     private int stock;
 
-    private boolean onSale;
+    private int onSale;
     private String pathImage;
 
     private LocalDateTime createdAt;
@@ -55,7 +55,7 @@ public class Product {
         return stock;
     }
 
-    public boolean isOnSale() {
+    public int isOnSale() {
         return onSale;
     }
 
@@ -97,7 +97,7 @@ public class Product {
         this.stock = stock;
     }
 
-    public void setOnSale(boolean onSale) {
+    public void setOnSale(int onSale) {
         this.onSale = onSale;
     }
 

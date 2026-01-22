@@ -24,14 +24,11 @@ public class SecurityConfig {
 	                "/login",
 	                "/register",
 	                "/css/**",
-	                "/h2-console/**"
+	                "/h2-console/**",
+	                "/api/**"
 	            ).permitAll()
 	            .anyRequest().authenticated()
 	        )
-			.ignoringRequestMatchers(
-				"/h2-console/**",
-				"/api/**"
-			)
 	        .formLogin(form -> form
 	            .loginPage("/login")
 	            .defaultSuccessUrl("/products", true)
