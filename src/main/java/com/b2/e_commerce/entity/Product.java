@@ -1,6 +1,5 @@
 package com.b2.e_commerce.entity;
 
-import com.b2.e_commerce.entity.enums.ProductStatus;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -22,10 +21,9 @@ public class Product {
 
     private double price;
 
-    @Enumerated(EnumType.STRING)
-    private ProductStatus status;
+    private int stock;
 
-    private boolean onSale;
+    private int onSale;
     private String pathImage;
 
     private LocalDateTime createdAt;
@@ -53,11 +51,11 @@ public class Product {
         return price;
     }
 
-    public ProductStatus getStatus() {
-        return status;
+    public int getStock() {
+        return stock;
     }
 
-    public boolean isOnSale() {
+    public int isOnSale() {
         return onSale;
     }
 
@@ -95,11 +93,11 @@ public class Product {
         this.price = price;
     }
 
-    public void setStatus(ProductStatus status) {
-        this.status = status;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
-    public void setOnSale(boolean onSale) {
+    public void setOnSale(int onSale) {
         this.onSale = onSale;
     }
 
