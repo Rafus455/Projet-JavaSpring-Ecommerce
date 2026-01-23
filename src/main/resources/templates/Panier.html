@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" th:href="@{/css/panier.css}">
+</head>
+<body>
+
+	<div th:replace="header :: header"></div>
+	
+	 <div class="page-header">
+        <h1>Mon Panier</h1>
+        <p>Vous avez <strong>3 articles</strong> dans votre panier</p>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        
+        <!-- Cart Items -->
+        <div class="cart-items">
+            
+            <!-- Trust Badges -->
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">🚚</div>
+                    <div class="trust-badge-text">Livraison gratuite</div>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">🛡️</div>
+                    <div class="trust-badge-text">Paiement sécurisé</div>
+                </div>
+                <div class="trust-badge">
+                    <div class="trust-badge-icon">↩️</div>
+                    <div class="trust-badge-text">Retour sous 30 jours</div>
+                </div>
+            </div>
+
+            <!-- Cart Item 1 -->
+            <div class="cart-item">
+                <div class="item-image">💻</div>
+                <div class="item-details">
+                    <div class="item-category">Gaming</div>
+                    <div class="item-name">Ordinateur Gaming Ultra X</div>
+                    <div class="item-specs">
+                        Intel i9-14900K • 32 Go RAM • RTX 4080 • 1 To SSD
+                    </div>
+                    <div class="item-stock">✓ En stock</div>
+                </div>
+                <div class="item-actions">
+                    <div class="item-price">1 699,99 €</div>
+                    <div class="quantity-control">
+                        <button class="qty-btn" onclick="updateQuantity(1, -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-1" value="1" min="1" readonly>
+                        <button class="qty-btn" onclick="updateQuantity(1, 1)">+</button>
+                    </div>
+                    <button class="remove-btn" onclick="removeItem(1)">🗑️ Supprimer</button>
+                </div>
+            </div>
+
+            <!-- Cart Item 2 -->
+            <div class="cart-item">
+                <div class="item-image">🎧</div>
+                <div class="item-details">
+                    <div class="item-category">Audio</div>
+                    <div class="item-name">Casque Audio Premium</div>
+                    <div class="item-specs">
+                        Bluetooth 5.2 • Réduction de bruit active • 30h d'autonomie
+                    </div>
+                    <div class="item-stock">✓ En stock</div>
+                </div>
+                <div class="item-actions">
+                    <div class="item-price">129,99 €</div>
+                    <div class="quantity-control">
+                        <button class="qty-btn" onclick="updateQuantity(2, -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-2" value="1" min="1" readonly>
+                        <button class="qty-btn" onclick="updateQuantity(2, 1)">+</button>
+                    </div>
+                    <button class="remove-btn" onclick="removeItem(2)">🗑️ Supprimer</button>
+                </div>
+            </div>
+
+            <!-- Cart Item 3 -->
+            <div class="cart-item">
+                <div class="item-image">⌨️</div>
+                <div class="item-details">
+                    <div class="item-category">Accessoires</div>
+                    <div class="item-name">Clavier Mécanique RGB</div>
+                    <div class="item-specs">
+                        Switches mécaniques • Rétroéclairage RGB • Repose-poignet
+                    </div>
+                    <div class="item-stock low">⚠️ Plus que 3 en stock</div>
+                </div>
+                <div class="item-actions">
+                    <div class="item-price">89,99 €</div>
+                    <div class="quantity-control">
+                        <button class="qty-btn" onclick="updateQuantity(3, -1)">-</button>
+                        <input type="number" class="qty-input" id="qty-3" value="1" min="1" readonly>
+                        <button class="qty-btn" onclick="updateQuantity(3, 1)">+</button>
+                    </div>
+                    <button class="remove-btn" onclick="removeItem(3)">🗑️ Supprimer</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+            <h2>Récapitulatif</h2>
+            
+            <div class="summary-row">
+                <span class="summary-label">Sous-total (3 articles)</span>
+                <span class="summary-value" id="subtotal">1 919,97 €</span>
+            </div>
+            
+            <div class="summary-row">
+                <span class="summary-label">Livraison</span>
+                <span class="summary-value" style="color: #2ecc71;">Gratuite</span>
+            </div>
+            
+            <div class="summary-row">
+                <span class="summary-label">TVA (20%)</span>
+                <span class="summary-value" id="tax">383,99 €</span>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-total">
+                <span class="total-label">Total</span>
+                <span class="total-value" id="total">2 303,96 €</span>
+            </div>
+
+            <div class="promo-code">
+                <h3>Code promo</h3>
+                <div class="promo-input-group">
+                    <input type="text" class="promo-input" placeholder="Entrez votre code">
+                    <button class="promo-btn">Appliquer</button>
+                </div>
+            </div>
+
+            <button class="checkout-btn" onclick="checkout()">
+                🔒 Passer la commande
+            </button>
+            
+            <button class="continue-shopping" onclick="continueShopping()">
+                ← Continuer mes achats
+            </button>
+
+            <div class="payment-methods">
+                <p>Moyens de paiement acceptés</p>
+                <div class="payment-icons">
+                    💳 🏦 💰
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 SHOP - Tous droits réservés</p>
+        <p>Contactez-nous : contact@shop.com</p>
+    </footer>
+
+    <script>
+        // Prix unitaires des produits
+        const prices = {
+            1: 1699.99,
+            2: 129.99,
+            3: 89.99
+        };
+
+        // Mettre à jour la quantité
+        function updateQuantity(itemId, change) {
+            const qtyInput = document.getElementById(`qty-${itemId}`);
+            let currentQty = parseInt(qtyInput.value);
+            let newQty = currentQty + change;
+            
+            if (newQty >= 1) {
+                qtyInput.value = newQty;
+                updateTotals();
+            }
+        }
+
+        // Supprimer un article
+        function removeItem(itemId) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
+                const cartItem = document.querySelector(`#qty-${itemId}`).closest('.cart-item');
+                cartItem.style.opacity = '0';
+                cartItem.style.transform = 'translateX(-20px)';
+                
+                setTimeout(() => {
+                    cartItem.remove();
+                    updateTotals();
+                    updateCartCount();
+                }, 300);
+            }
+        }
+
+        // Mettre à jour les totaux
+        function updateTotals() {
+            let subtotal = 0;
+            
+            for (let itemId in prices) {
+                const qtyInput = document.getElementById(`qty-${itemId}`);
+                if (qtyInput) {
+                    const qty = parseInt(qtyInput.value);
+                    subtotal += prices[itemId] * qty;
+                }
+            }
+            
+            const tax = subtotal * 0.20;
+            const total = subtotal + tax;
+            
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2) + ' €';
+            document.getElementById('tax').textContent = tax.toFixed(2) + ' €';
+            document.getElementById('total').textContent = total.toFixed(2) + ' €';
+        }
+
+        // Mettre à jour le nombre d'articles dans le badge
+        function updateCartCount() {
+            let totalItems = 0;
+            for (let itemId in prices) {
+                const qtyInput = document.getElementById(`qty-${itemId}`);
+                if (qtyInput) {
+                    totalItems += parseInt(qtyInput.value);
+                }
+            }
+            
+            const badge = document.querySelector('.cart-badge');
+            if (badge) {
+                badge.textContent = totalItems;
+            }
+            
+            const pageHeader = document.querySelector('.page-header p');
+            if (pageHeader) {
+                pageHeader.innerHTML = `Vous avez <strong>${totalItems} article${totalItems > 1 ? 's' : ''}</strong> dans votre panier`;
+            }
+        }
+
+        // Passer commande
+        function checkout() {
+            alert('Redirection vers la page de paiement...');
+        }
+
+        // Continuer les achats
+        function continueShopping() {
+            window.location.href = '#computers';
+        }
+    </script>
+    
+    </body>
+</html>

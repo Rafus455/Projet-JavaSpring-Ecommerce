@@ -1,20 +1,26 @@
-<header th:fragment="header" xmlns:th="http://www.thymeleaf.org">
-    <div class="header-container">
-
-        <div class="logo">
-            <img th:src="@{/images/poulpe.webp}" alt="Logo">
+<header>
+        <div class="header-container">
+            <div class="logo">
+            	<p>SHOP</p>
+            </div>
+            
+            <nav class="main-nav">
+                <a th:href="@{/index}">Accueil</a>
+				<a th:href="@{/ordinateur}">Ordinateur</a>
+                <a href="#best">Pc Portable</a>
+                <a href="#contact">Téléphone</a>
+            </nav>
+            
+            <div class="actions">
+                <div class="icon">🔍</div>
+                <div class="icon">
+                	<img th:src="@{/images/user.png}" alt="Logo">
+                </div>
+                <a th:href="@{/panier}">
+                <div class="icon">
+                	<img th:src="@{/images/panier.png}" alt="Logo">
+                </div>
+                </a>
+            </div>
         </div>
-
-        <nav class="main-nav">
-            <a href="#">Ordinateur</a>
-            <a href="#">PC Portable</a>
-            <a href="#">Téléphone</a>
-        </nav>
-
-        <div class="actions">
-            <img th:src="@{/images/user.png}" alt="Compte">
-            <img th:src="@{/images/panier.png}" alt="Panier">
-        </div>
-
-    </div>
-</header>
+    </header>
