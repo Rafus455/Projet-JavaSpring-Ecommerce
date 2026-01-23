@@ -12,10 +12,11 @@ public class ProductRequestDTO {
     @Positive(message = "Le prix doit être supérieur à 0")
     private double price;
 
-    @NotNull(message = "Le stock est obligatoire")
+    @Min(value = 0, message = "Le stock doit être positif")
     private int stock;
 
-    @NotNull(message = "Le champ onSale est obligatoire")
+    @Min(value = 0)
+    @Max(value = 100)
     private int onSale;
 
     @NotBlank(message = "Le chemin de l'image est obligatoire")

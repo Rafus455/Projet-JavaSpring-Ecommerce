@@ -13,50 +13,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.b2.e_commerce.dto.ProductRequestDTO;
-import com.b2.e_commerce.dto.ProductResponseDTO;
-import com.b2.e_commerce.service.ProductService;
+import com.b2.e_commerce.dto.CategoryRequestDTO;
+import com.b2.e_commerce.dto.CategoryResponseDTO;
+import com.b2.e_commerce.service.CategoryService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/admin/product")
-public class AdminProductController {
+@RequestMapping("/api/admin/category")
+public class AdminCategoryController {
 
-    private final ProductService productService;
+    private final CategoryService categoryService;
 
-    public AdminProductController(ProductService productService) {
-        this.productService = productService;
+    public AdminCategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
     // GET ALL
     @GetMapping
-    public List<ProductResponseDTO> getAll() {
-        return productService.findAll();
+    public List<CategoryResponseDTO> getAll() {
+        return categoryService.findAll();
     }
 
     // GET BY ID
     @GetMapping("/{id}")
-    public ProductResponseDTO getById(@PathVariable Long id) {
-        return productService.findById(id);
+    public CategoryResponseDTO getById(@PathVariable Long id) {
+        return categoryService.findById(id);
     }
 
     // CREATE
     @PostMapping
-    public ProductResponseDTO create(@Valid @RequestBody ProductRequestDTO dto) {
-        return productService.create(dto);
+    public CategoryResponseDTO create(@Valid @RequestBody CategoryRequestDTO dto) {
+        return categoryService.create(dto);
     }
 
     // MODIFY
     @PutMapping("/{id}")
-    public ProductResponseDTO modify(@PathVariable Long id, @Valid @RequestBody ProductRequestDTO dto) {
-        return productService.update(id, dto);
+    public CategoryResponseDTO modify(@PathVariable Long id, @Valid @RequestBody CategoryRequestDTO dto) {
+        return categoryService.update(id, dto);
     }
 
     // DELETE
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
-       productService.delete(id);
+    	categoryService.delete(id);
     }
 }
