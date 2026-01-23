@@ -9,6 +9,9 @@ import com.b2.e_commerce.repository.RoleRepository;
 import com.b2.e_commerce.repository.UserRepository;
 import com.b2.e_commerce.security.JwtUtil;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,8 +44,9 @@ public class AuthController {
 
     // LOGIN JWT
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(
-            @RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(
+            @RequestBody LoginRequest request,
+            HttpServletResponse response) {
 
         Authentication auth = authManager.authenticate(
             new UsernamePasswordAuthenticationToken(
@@ -53,8 +57,15 @@ public class AuthController {
 
         String token = jwtUtil.generateToken(auth.getName());
 
-        return ResponseEntity.ok(new LoginResponse(token));
+        Cookie jwtCookie = new Cookie("JWT", token);
+        jwtCookie.setHttpOnly(true);
+        jwtCookie.setPath("/");
+        jwtCookie.setMaxAge(24 * 60 * 60); // 1 day
+        response.addCookie(jwtCookie);
+
+        return ResponseEntity.ok().build();
     }
+
 
     // REGISTER
     @PostMapping("/register")
@@ -73,6 +84,20 @@ public class AuthController {
         u.setRole(role);
 
         userRepo.save(u);
+
+        return ResponseEntity.ok().build();
+    }
+    
+    // LOGOUT
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletResponse response) {
+
+        Cookie jwtCookie = new Cookie("JWT", null);
+        jwtCookie.setHttpOnly(true);
+        jwtCookie.setPath("/");
+        jwtCookie.setMaxAge(0);
+
+        response.addCookie(jwtCookie);
 
         return ResponseEntity.ok().build();
     }

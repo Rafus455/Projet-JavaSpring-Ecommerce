@@ -44,17 +44,19 @@ public class SecurityConfig {
 
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/",
-                    "/index",
+            		"/",
+            		"/index",
                     "/login",
                     "/register",
+            		"/account",
                     "/css/**",
-                    "/h2-console/**"
+                    "/h2-console/**",
+                    "/api/auth/**"
                 ).permitAll()
-
-                .requestMatchers("/api/auth/**").permitAll()
-
-                .requestMatchers("/api/**").authenticated()
+                
+                .requestMatchers(
+            		"/api/**"
+                ).authenticated()
 
                 .anyRequest().permitAll()
             )
@@ -64,8 +66,8 @@ public class SecurityConfig {
             )
 
             .addFilterBefore(
-            	    new JwtFilter(userDetailsService, jwtUtil),
-            	    UsernamePasswordAuthenticationFilter.class
+                new JwtFilter(userDetailsService, jwtUtil),
+                UsernamePasswordAuthenticationFilter.class
             );
 
         return http.build();

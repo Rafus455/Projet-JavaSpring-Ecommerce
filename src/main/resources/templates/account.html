@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon compte</title>
+	
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+	<link rel="stylesheet" th:href="@{/css/account.css}">
+</head>
+<body>
+	
+	<header>
+        <div class="header-container">
+            <div class="logo">
+            	<p>SHOP</p>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="#home">Accueil</a>
+				<a th:href="@{/ordinateur}">Ordinateur</a>
+                <a href="#best">Pc Portable</a>
+                <a href="#contact">Téléphone</a>
+            </nav>
+            
+            <div class="actions">
+                <div class="icon">🔍</div>
+                <div class="icon">
+                	<img th:src="@{/images/user.png}" alt="Logo">
+                </div>
+                <div class="icon">
+                	<img th:src="@{/images/panier.png}" alt="Logo">
+                </div>
+            </div>
+        </div>
+    </header>
+
+	<h1>Mon compte</h1>
+	
+	<button id="logoutBtn" class="logout-btn">
+	    Se déconnecter
+	</button>
+	
+	<div th:if="${param.success}">
+	    <p style="color: green;">Informations mises à jour</p>
+	</div>
+	
+	<form method="post" th:action="@{/account}">
+	
+	    <label>Nom</label><br>
+	    <input type="text" name="name" th:value="${user.name}" required><br><br>
+	
+	    <label>Prénom</label><br>
+	    <input type="text" name="firstname" th:value="${user.firstname}" required><br><br>
+	
+	    <label>Email</label><br>
+	    <input type="email" name="mail" th:value="${user.mail}" required><br><br>
+	
+	    <label>Nouveau mot de passe</label><br>
+	    <input type="password" name="password" placeholder="Laisser vide pour ne pas changer"><br><br>
+	
+	    <button type="submit">Enregistrer</button>
+	</form>
+	
+	</body>
+	
+	<script>
+		document.getElementById("logoutBtn").addEventListener("click", async () => {
+		    await fetch("/api/auth/logout", {
+		        method: "POST"
+		    });
+	
+		    window.location.href = "/login";
+		});
+	</script>
+</html>
