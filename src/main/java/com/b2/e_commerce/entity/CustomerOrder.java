@@ -2,6 +2,8 @@ package com.b2.e_commerce.entity;
 
 import com.b2.e_commerce.entity.enums.OrderStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,7 +20,6 @@ public class CustomerOrder {
 
     private double priceTotal;
 
-    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     private LocalDateTime orderDate;
