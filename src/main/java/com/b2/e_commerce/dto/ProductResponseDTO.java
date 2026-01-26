@@ -1,7 +1,8 @@
 package com.b2.e_commerce.dto;
 
 public class ProductResponseDTO {
-	private Long id;
+
+    private Long id;
     private String name;
     private String description;
     private double price;
@@ -52,7 +53,7 @@ public class ProductResponseDTO {
         this.stock = stock;
     }
 
-    public int getOnSale() {
+    public int isOnSale() {
         return onSale;
     }
 

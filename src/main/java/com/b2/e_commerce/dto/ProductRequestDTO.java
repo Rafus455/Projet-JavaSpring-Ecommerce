@@ -19,7 +19,6 @@ public class ProductRequestDTO {
     @Max(value = 100)
     private int onSale;
 
-    @NotBlank(message = "Le chemin de l'image est obligatoire")
     private String pathImage;
     
     @NotNull(message = "La catégorie est obligatoire")

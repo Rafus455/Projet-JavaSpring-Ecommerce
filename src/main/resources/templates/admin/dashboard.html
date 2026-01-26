@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <h2>ADMIN</h2>
+        <ul>
+            <li data-section="overview" class="active">Dashboard</li>
+            <li data-section="categories">Catégories</li>
+            <li data-section="products">Produits / Stock</li>
+            <li data-section="orders">Commandes</li>
+            <li class="logout">Déconnexion</li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <section id="overview" class="section active">
+            <h1>Dashboard</h1>
+            <div class="cards">
+                <div class="card">👥 Utilisateurs<br><strong>—</strong></div>
+                <div class="card">📦 Produits<br><strong>—</strong></div>
+                <div class="card">🧾 Commandes<br><strong>—</strong></div>
+                <div class="card">💰 CA<br><strong>—</strong></div>
+            </div>
+        </section>
+
+        <section id="categories" class="section">
+            <h1>Catégories</h1>
+
+            <button class="primary-btn" onclick="openCreateCategory()">➕ Ajouter une catégorie</button>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="category-table"></tbody>
+            </table>
+        </section>
+
+        <section id="products" class="section">
+            <h1>Produits</h1>
+
+            <button class="primary-btn" onclick="openCreateProduct()">➕ Ajouter un produit</button>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prix</th>
+						<th>Stock</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="product-table"></tbody>
+            </table>
+        </section>
+
+        <section id="orders" class="section">
+            <h1>Commandes</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Client</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="order-table"></tbody>
+            </table>
+        </section>
+
+    </main>
+</div>
+
+<div id="categoryModal" class="modal">
+    <div class="modal-content">
+        <h3 id="categoryModalTitle">Catégorie</h3>
+
+        <input type="hidden" id="cat-id">
+
+        <label>Nom</label>
+        <input id="cat-name">
+
+        <label>Description</label>
+        <input id="cat-description">
+
+        <label>Type</label>
+        <input id="cat-type">
+
+        <button onclick="saveCategory()">Enregistrer</button>
+        <button onclick="closeModal()">Annuler</button>
+    </div>
+</div>
+
+<div id="productModal" class="modal">
+    <div class="modal-content product-modal">
+
+        <div class="product-form">
+            <h3 id="productModalTitle">Produit</h3>
+
+            <input type="hidden" id="prod-id">
+
+            <label>Nom</label>
+            <input id="prod-name">
+
+            <label>Description</label>
+            <textarea id="prod-description"></textarea>
+
+            <label>Prix</label>
+            <input type="number" id="prod-price" min="0" step="0.01">
+
+            <label>Stock</label>
+            <input type="number" id="prod-stock" min="0">
+
+			<label>Promotion (%)</label>
+			<input
+			    type="number"
+			    id="prod-onsale"
+			    min="0"
+			    max="100"
+			    step="1"
+			    value="0"
+			>
+
+            <label>Catégorie</label>
+            <select id="prod-category"></select>
+
+            <div class="modal-actions">
+                <button onclick="saveProduct()">Enregistrer</button>
+                <button onclick="closeModal()">Annuler</button>
+            </div>
+        </div>
+
+        <div class="product-image">
+            <label>Image produit</label>
+
+            <div id="drop-zone" class="drop-zone">
+                <p>Glissez l’image ici<br>ou cliquez</p>
+                <input type="file" id="prod-image" accept="image/*" hidden>
+            </div>
+
+            <img id="image-preview">
+        </div>
+
+    </div>
+</div>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>
+

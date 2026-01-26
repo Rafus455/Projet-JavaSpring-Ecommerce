@@ -51,12 +51,16 @@ public class SecurityConfig {
             		"/account",
                     "/css/**",
                     "/h2-console/**",
-                    "/api/auth/**"
+                    "/api/auth/**",
+                    "/uploads/**"
                 ).permitAll()
                 
                 .requestMatchers(
-            		"/api/**"
-                ).permitAll()
+            		"/api/**",
+            		"/ordinateur"
+                ).authenticated()
+                
+                .requestMatchers("/admin/dashboard").hasRole("ADMIN")
 
                 .anyRequest().permitAll()
             )
