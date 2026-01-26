@@ -52,7 +52,8 @@ public class SecurityConfig {
                     "/css/**",
                     "/h2-console/**",
                     "/api/auth/**",
-                    "/uploads/**"
+                    "/uploads/**",
+                    "/js/**"
                 ).permitAll()
                 
                 .requestMatchers(

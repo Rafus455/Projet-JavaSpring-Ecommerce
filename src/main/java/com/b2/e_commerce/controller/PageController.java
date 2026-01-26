@@ -53,4 +53,18 @@ public class PageController {
     public String dashboard() {
         return "admin/dashboard";
     }
+    
+    @GetMapping("/panier")
+    public String pannier(Authentication authentication, Model model) {
+
+    	if (authentication != null && authentication.isAuthenticated()) {
+    		String mail = authentication.getName();
+            User user = userRepository.findByMail(mail).orElseThrow();
+
+            model.addAttribute("user", user);
+            return "Panier";
+        }
+    	
+    	return "redirect:/login";
+    }
 }

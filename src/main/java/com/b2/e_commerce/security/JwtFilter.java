@@ -34,6 +34,12 @@ public class JwtFilter extends OncePerRequestFilter {
             FilterChain chain)
             throws ServletException, IOException {
 
+        String path = request.getServletPath();
+        if (path.startsWith("/h2-console")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         String token = null;
 
         String authHeader = request.getHeader("Authorization");
@@ -55,6 +61,15 @@ public class JwtFilter extends OncePerRequestFilter {
 
             String username = jwtUtil.extractUsername(token);
             String role = jwtUtil.extractRole(token);
+
+            if (role == null || role.isBlank()) {
+                chain.doFilter(request, response);
+                return;
+            }
+
+            if (!role.startsWith("ROLE_")) {
+                role = "ROLE_" + role;
+            }
 
             UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(

@@ -46,7 +46,6 @@ public class OrderService {
 
         CustomerOrder order = new CustomerOrder();
         order.setUser(user);
-        order.setPriceTotal(dto.getPriceTotal());
         order.setStatus(dto.getStatus());
         order.setOrderDate(LocalDateTime.now());
 

@@ -29,7 +29,7 @@ public class OrderItemService {
     }
 
     @Transactional
-    public void addItemToOrder(OrderItemRequestDTO dto) {
+    public OrderItem addItemToOrder(OrderItemRequestDTO dto) {
         CustomerOrder order = orderRepository.findById(dto.getOrderId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Order avec id " + dto.getOrderId() + " introuvable"));
@@ -50,12 +50,19 @@ public class OrderItemService {
                 .findByOrderIdAndProductId(order.getId(), product.getId())
                 .orElse(null);
 
+        double addedPrice = product.getPrice() * dto.getQuantity();
+
+        double currentTotal = order.getPriceTotal();
+
+        order.setPriceTotal(currentTotal + addedPrice);
+
         product.setStock(product.getStock() - dto.getQuantity());
         productRepository.save(product);
 
         if (item != null) {
-            item.setQuantity(item.getQuantity() + dto.getQuantity());
+            item.setQuantity(dto.getQuantity());
             orderItemRepository.save(item);
+            return item;
         } else {
             OrderItem newItem = new OrderItem();
             newItem.setOrder(order);
@@ -64,10 +71,13 @@ public class OrderItemService {
             newItem.setUnitPrice(product.getPrice());
 
             orderItemRepository.save(newItem);
+            return newItem;
         }
     }
 
+    @Transactional
     public void updateItemQuantity(Long itemId, int newQuantity) {
+    	System.out.println("début");
         OrderItem item = orderItemRepository.findById(itemId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Item avec id " + itemId + " introuvable"));
@@ -87,10 +97,9 @@ public class OrderItemService {
         }
 
         product.setStock(product.getStock() - diff);
-        productRepository.save(product);
 
         item.setQuantity(newQuantity);
-        orderItemRepository.save(item);
+    	System.out.println("euhh" + newQuantity);
     }
 
     public void deleteItem(Long itemId) {

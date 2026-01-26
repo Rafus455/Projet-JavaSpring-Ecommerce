@@ -1,6 +1,7 @@
 package com.b2.e_commerce.controller.REST;
 
 import com.b2.e_commerce.dto.OrderItemRequestDTO;
+import com.b2.e_commerce.entity.OrderItem;
 import com.b2.e_commerce.service.OrderItemService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,8 @@ public class AdminOrderItemController {
 
     // CREATE
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addItemToOrder(@Valid @RequestBody OrderItemRequestDTO dto) {
-        orderItemService.addItemToOrder(dto);
+    public OrderItem addItemToOrder(@Valid @RequestBody OrderItemRequestDTO dto) {
+        return orderItemService.addItemToOrder(dto);
     }
 
     // UPDATE
@@ -29,6 +29,7 @@ public class AdminOrderItemController {
             @PathVariable Long itemId,
             @RequestParam int quantity
     ) {
+    	System.out.println("euhh");
         orderItemService.updateItemQuantity(itemId, quantity);
     }
 
