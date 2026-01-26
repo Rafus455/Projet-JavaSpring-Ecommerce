@@ -1,21 +1,23 @@
 <header>
+	    <link rel="stylesheet" th:href="@{/css/header.css}">
         <div class="header-container">
             <div class="logo">
             	<p>SHOP</p>
             </div>
             
             <nav class="main-nav">
-                <a th:href="@{/index}">Accueil</a>
-				<a th:href="@{/ordinateur}">Ordinateur</a>
-                <a href="#best">Pc Portable</a>
-                <a href="#contact">Téléphone</a>
+                <a th:href="@{/}">Accueil</a>
+				 <a th:href="@{/categorie/ordinateur}">Ordinateur</a>
+                <a th:href="@{/categorie/pc_portable}">Pc Portable</a>
+                <a th:href="@{/categorie/téléphone}">Téléphone</a>
             </nav>
             
             <div class="actions">
-                <div class="icon">🔍</div>
-                <div class="icon">
-                	<img th:src="@{/images/user.png}" alt="Logo">
-                </div>
+                <a th:href="@{/account}">
+                	<div class="icon">
+                		<img th:src="@{/images/user.png}" alt="Logo">
+                	</div>
+                </a>
                 <a th:href="@{/panier}">
                 <div class="icon">
                 	<img th:src="@{/images/panier.png}" alt="Logo">
