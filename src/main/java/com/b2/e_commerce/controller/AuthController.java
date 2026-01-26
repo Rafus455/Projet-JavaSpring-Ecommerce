@@ -55,17 +55,21 @@ public class AuthController {
             )
         );
 
-        String token = jwtUtil.generateToken(auth.getName());
+        String role = auth.getAuthorities()
+                .iterator()
+                .next()
+                .getAuthority();
+
+        String token = jwtUtil.generateToken(auth.getName(), role);
 
         Cookie jwtCookie = new Cookie("JWT", token);
         jwtCookie.setHttpOnly(true);
         jwtCookie.setPath("/");
-        jwtCookie.setMaxAge(24 * 60 * 60); // 1 day
+        jwtCookie.setMaxAge(24 * 60 * 60);
         response.addCookie(jwtCookie);
 
         return ResponseEntity.ok().build();
     }
-
 
     // REGISTER
     @PostMapping("/register")
