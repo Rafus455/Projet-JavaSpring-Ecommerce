@@ -57,9 +57,11 @@ public class SecurityConfig {
                     "/panier"
                 ).permitAll()
                 
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
                 .requestMatchers(
-            		"/api/**",
-            		"/ordinateur"
+            	"/api/**",
+            	"/ordinateur"
                 ).authenticated()
                 
                 .requestMatchers("/admin/dashboard").hasRole("ADMIN")

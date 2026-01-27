@@ -7,6 +7,7 @@ import com.b2.e_commerce.entity.enums.OrderStatus;
 public class OrderResponseDTO {
 	private Long id;
     private Long userId;
+    private String userMail;
     private double priceTotal;
     private OrderStatus status;
     private LocalDateTime orderDate;
@@ -27,6 +28,14 @@ public class OrderResponseDTO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getUserMail() {
+        return userMail;
+    }
+
+    public void setUserMail(String userMail) {
+        this.userMail = userMail;
     }
 
     public double getPriceTotal() {

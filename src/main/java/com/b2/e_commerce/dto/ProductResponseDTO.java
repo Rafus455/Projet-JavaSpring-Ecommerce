@@ -10,6 +10,7 @@ public class ProductResponseDTO {
     private int onSale;
     private String pathImage;
     private String categoryName;
+    private Long categoryId;
 
     public ProductResponseDTO() {}
 
@@ -53,7 +54,7 @@ public class ProductResponseDTO {
         this.stock = stock;
     }
 
-    public int isOnSale() {
+    public int getOnSale() {
         return onSale;
     }
 
@@ -75,5 +76,13 @@ public class ProductResponseDTO {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }

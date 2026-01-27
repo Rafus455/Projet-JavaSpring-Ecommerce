@@ -22,20 +22,31 @@
 
     <main class="content">
 
-        <section id="overview" class="section active">
-            <h1>Dashboard</h1>
-            <div class="cards">
-                <div class="card">👥 Utilisateurs<br><strong>—</strong></div>
-                <div class="card">📦 Produits<br><strong>—</strong></div>
-                <div class="card">🧾 Commandes<br><strong>—</strong></div>
-                <div class="card">💰 CA<br><strong>—</strong></div>
-            </div>
-        </section>
+		<section id="overview" class="section active">
+		    <h1>Dashboard</h1>
+
+		    <div class="cards">
+		        <div class="card">
+		            Utilisateurs<br>
+		            <strong id="stat-users">—</strong>
+		        </div>
+
+		        <div class="card">
+		            Produits<br>
+		            <strong id="stat-products">—</strong>
+		        </div>
+
+		        <div class="card">
+		            Commandes<br>
+		            <strong id="stat-orders">—</strong>
+		        </div>
+		    </div>
+		</section>
 
         <section id="categories" class="section">
             <h1>Catégories</h1>
 
-            <button class="primary-btn" onclick="openCreateCategory()">➕ Ajouter une catégorie</button>
+            <button class="primary-btn" onclick="openCreateCategory()">+ Ajouter une catégorie</button>
 
             <table>
                 <thead>
@@ -53,7 +64,7 @@
         <section id="products" class="section">
             <h1>Produits</h1>
 
-            <button class="primary-btn" onclick="openCreateProduct()">➕ Ajouter un produit</button>
+            <button class="primary-btn" onclick="openCreateProduct()">+ Ajouter un produit</button>
 
             <table>
                 <thead>
@@ -153,9 +164,10 @@
             <div id="drop-zone" class="drop-zone">
                 <p>Glissez l’image ici<br>ou cliquez</p>
                 <input type="file" id="prod-image" accept="image/*" hidden>
+                <img id="drop-image-preview" class="drop-image" alt="Aperçu image produit" style="display:none;">
             </div>
 
-            <img id="image-preview">
+            <img id="image-preview" style="display:none;">
         </div>
 
     </div>

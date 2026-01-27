@@ -2,6 +2,8 @@
 let categoryMode = "create";
 let productMode = "create";
 let selectedImage = null;
+// Helper to include credentials (cookies) on same-origin API calls
+const apiFetch = (url, opts = {}) => fetch(url, Object.assign({ credentials: 'same-origin' }, opts));
 
 // NAVIGATION
 document.querySelectorAll(".sidebar li[data-section]").forEach(item => {
@@ -12,21 +14,22 @@ document.querySelectorAll(".sidebar li[data-section]").forEach(item => {
         item.classList.add("active");
         document.getElementById(item.dataset.section).classList.add("active");
 
-        if (item.dataset.section === "categories") loadCategories();
-        if (item.dataset.section === "products") loadProducts();
-        if (item.dataset.section === "orders") loadOrders();
+            if (item.dataset.section === "overview") loadStats();
+            if (item.dataset.section === "categories") loadCategories();
+            if (item.dataset.section === "products") loadProducts();
+            if (item.dataset.section === "orders") loadOrders();
     });
 });
 
 // LOGOUT
 document.querySelector(".logout").addEventListener("click", async () => {
-    await fetch("/api/auth/logout", { method: "POST" });
+    await apiFetch("/api/auth/logout", { method: "POST" });
     window.location.href = "/login";
 });
 
 // CATEGORIES
 async function loadCategories() {
-    const res = await fetch("/api/admin/category");
+    const res = await apiFetch("/api/admin/category");
     const categories = await res.json();
 
     const table = document.getElementById("category-table");
@@ -60,7 +63,7 @@ function openCreateCategory() {
 function editCategory(id) {
     categoryMode = "edit";
 
-    fetch(`/api/admin/category/${id}`)
+    apiFetch(`/api/admin/category/${id}`)
         .then(res => res.json())
         .then(cat => {
             document.getElementById("categoryModalTitle").innerText = "Modifier catégorie";
@@ -80,14 +83,14 @@ async function saveCategory() {
     };
 
     if (categoryMode === "create") {
-        await fetch("/api/admin/category", {
+        await apiFetch("/api/admin/category", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
         });
     } else {
         const id = document.getElementById("cat-id").value;
-        await fetch(`/api/admin/category/${id}`, {
+        await apiFetch(`/api/admin/category/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
@@ -100,13 +103,13 @@ async function saveCategory() {
 
 async function deleteCategory(id) {
     if (!confirm("Supprimer cette catégorie ?")) return;
-    await fetch(`/api/admin/category/${id}`, { method: "DELETE" });
+    await apiFetch(`/api/admin/category/${id}`, { method: "DELETE" });
     loadCategories();
 }
 
 // PRODUCTS
 async function loadProducts() {
-    const res = await fetch("/api/admin/product");
+    const res = await apiFetch("/api/admin/product");
     const products = await res.json();
 
     const table = document.getElementById("product-table");
@@ -141,13 +144,14 @@ function openCreateProduct() {
     document.getElementById("prod-image").value = "";
 
     loadCategoryOptions();
+    clearDropZonePreview();
     document.getElementById("productModal").style.display = "flex";
 }
 
 function editProduct(id) {
     productMode = "edit";
 
-    fetch(`/api/admin/product/${id}`)
+    apiFetch(`/api/admin/product/${id}`)
         .then(res => res.json())
         .then(p => {
             document.getElementById("productModalTitle").innerText = "Modifier produit";
@@ -161,12 +165,10 @@ function editProduct(id) {
 
             loadCategoryOptions(p.categoryId);
 
-            const preview = document.getElementById("image-preview");
             if (p.pathImage) {
-                preview.src = p.pathImage;
-                preview.style.display = "block";
+                setDropZonePreview(p.pathImage);
             } else {
-                preview.style.display = "none";
+                clearDropZonePreview();
             }
 
             document.getElementById("prod-image").value = "";
@@ -203,7 +205,7 @@ async function saveProduct() {
         method = "PUT";
     }
 
-    await fetch(url, {
+    await apiFetch(url, {
         method,
         body: formData
     });
@@ -215,13 +217,14 @@ async function saveProduct() {
 
 async function deleteProduct(id) {
     if (!confirm("Supprimer ce produit ?")) return;
-    await fetch(`/api/admin/product/${id}`, { method: "DELETE" });
+    await apiFetch(`/api/admin/product/${id}`, { method: "DELETE" });
     loadProducts();
 }
 
 const dropZone = document.getElementById("drop-zone");
 const fileInput = document.getElementById("prod-image");
 const preview = document.getElementById("image-preview");
+const dropImage = document.getElementById("drop-image-preview");
 
 dropZone.addEventListener("click", () => fileInput.click());
 
@@ -251,15 +254,43 @@ function handleFile(file) {
 
     const reader = new FileReader();
     reader.onload = e => {
-        preview.src = e.target.result;
-        preview.style.display = "block";
+        // show preview inside drop zone
+        setDropZonePreview(e.target.result);
     };
     reader.readAsDataURL(file);
 }
 
+function setDropZonePreview(url) {
+    if (!dropZone) return;
+    // use img element inside drop zone for proper aspect ratio handling
+    if (dropImage) {
+        dropImage.src = url;
+        dropImage.style.display = 'block';
+    }
+    dropZone.classList.add('has-image');
+    const p = dropZone.querySelector('p');
+    if (p) p.style.display = 'none';
+    if (preview) preview.style.display = 'none';
+}
+
+function clearDropZonePreview() {
+    if (!dropZone) return;
+    if (dropImage) {
+        dropImage.src = '';
+        dropImage.style.display = 'none';
+    }
+    dropZone.classList.remove('has-image');
+    const p = dropZone.querySelector('p');
+    if (p) p.style.display = 'block';
+    if (preview) {
+        preview.style.display = 'none';
+        preview.src = '';
+    }
+}
+
 // ORDERS
 async function loadOrders() {
-    const res = await fetch("/api/admin/order");
+    const res = await apiFetch("/api/admin/order");
     const orders = await res.json();
 
     const table = document.getElementById("order-table");
@@ -282,6 +313,21 @@ async function loadOrders() {
     });
 }
 
+// DASHBOARD STATS
+async function loadStats() {
+    try {
+        const res = await fetch("/api/admin/dashboard");
+        if (!res.ok) return;
+        const stats = await res.json();
+
+        document.getElementById("stat-users").innerText = stats.users ?? 0;
+        document.getElementById("stat-products").innerText = stats.products ?? 0;
+        document.getElementById("stat-orders").innerText = stats.orders ?? 0;
+    } catch (err) {
+        console.error('Failed to load dashboard stats', err);
+    }
+}
+
 function renderStatusOptions(current) {
     return ["PENDING", "PAID", "SHIPPED", "CANCELLED"]
         .map(s => `<option value="${s}" ${s === current ? "selected" : ""}>${s}</option>`)
@@ -289,7 +335,7 @@ function renderStatusOptions(current) {
 }
 
 async function updateOrderStatus(id, status) {
-    await fetch(`/api/admin/order/${id}/status`, {
+    await apiFetch(`/api/admin/order/${id}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status })
@@ -302,7 +348,7 @@ function closeModal() {
 }
 
 async function loadCategoryOptions(selectedId = null) {
-    const res = await fetch("/api/admin/category");
+    const res = await apiFetch("/api/admin/category");
     const categories = await res.json();
 
     const select = document.getElementById("prod-category");
@@ -317,5 +363,9 @@ async function loadCategoryOptions(selectedId = null) {
         }
         select.appendChild(option);
     });
+}
+
+if (document.getElementById('overview') && document.getElementById('overview').classList.contains('active')) {
+    loadStats();
 }
 

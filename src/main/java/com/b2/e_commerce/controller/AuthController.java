@@ -86,8 +86,12 @@ public class AuthController {
         u.setMail(req.getEmail());
         u.setPassword(encoder.encode(req.getPassword()));
         u.setRole(role);
+        u.setName(req.getName());
+        u.setFirstname(req.getFirstname());
 
         userRepo.save(u);
+        
+        System.out.println(req);
 
         return ResponseEntity.ok().build();
     }

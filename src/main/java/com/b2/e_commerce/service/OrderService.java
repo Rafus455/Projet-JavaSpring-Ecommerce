@@ -80,6 +80,7 @@ public class OrderService {
         OrderResponseDTO dto = new OrderResponseDTO();
         dto.setId(order.getId());
         dto.setUserId(order.getUser().getId());
+        dto.setUserMail(order.getUser().getMail());
         dto.setPriceTotal(order.getPriceTotal());
         dto.setStatus(order.getStatus());
         dto.setOrderDate(order.getOrderDate());

@@ -59,6 +59,10 @@ public class Product {
         return onSale;
     }
 
+    public int getOnSale() {
+        return onSale;
+    }
+
     public String getPathImage() {
         return pathImage;
     }

@@ -151,9 +151,10 @@ public class ProductService {
         dto.setDescription(product.getDescription());
         dto.setPrice(product.getPrice());
         dto.setStock(product.getStock());
-        dto.setOnSale(product.isOnSale());
+        dto.setOnSale(product.getOnSale());
         dto.setPathImage(product.getPathImage());
         dto.setCategoryName(product.getCategory().getName());
+        dto.setCategoryId(product.getCategory().getId());
         return dto;
     }
 }
