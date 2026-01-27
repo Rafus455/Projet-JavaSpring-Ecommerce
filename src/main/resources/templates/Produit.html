@@ -4,52 +4,48 @@
     <meta charset="UTF-8">
     <title>Index</title>
     <link rel="stylesheet" th:href="@{/css/produit.css}">
-	    
+	    											
 </head>
 <body>
 
 	<div th:replace="header :: header"></div>
 	
 	<div class="breadcrumb">
-        <a href="#home">Accueil</a> / <a href="#computers">Ordinateurs</a> / Ordinateur Gaming Ultra X
+        <a href="#home">Accueil</a> / <a href="#computers">Ordinateurs</a> / <div th:text="${product.name}"></div>
     </div>
 
-    <!-- Product Section -->
     <div class="product-container">
-        <!-- Product Images -->
         <div class="product-images">
             <div class="main-image-container">
                 <div class="main-image">
-                <img th:src="@{/images/pc_gaming.png}" alt="Logo">
+                <img th:src="@{${product.pathImage}}" alt="Produit">
+                    <span class="product-badge new"
+                          th:if="true">
+                        Nouveau
+                    </span>
                 </div>
-                <span class="product-badge">Nouveau</span>
             </div>
         </div>
 
-        <!-- Product Info -->
         <div class="product-info">
             <div class="product-category">Gaming</div>
-            <h1 class="product-title">Ordinateur Gaming Ultra X</h1>
-            
+					<div class="product-category"
+                         th:text="${product.name}">x	
+                    </div>            
             <div class="product-rating">
                 <span class="stars">★★★★★</span>
             </div>
 
             <div class="product-price-section">
-                <div>
-                    <span class="product-price">1 699,99 €</span>
-                    <span class="old-price">1 899,99 €</span>
+                <div class="product-price">
+                	<span th:text="${product.price}">0.00 €</span>
                 </div>
-                <div class="savings">💰 Économisez 200,00 € (11%)</div>
             </div>
 
-            <p class="product-description">
-                Plongez au cœur de l'action avec l'Ordinateur Gaming Ultra X, conçu pour les gamers exigeants. 
-                Équipé d'un processeur Intel i9-14900K dernière génération et d'une carte graphique RTX 4080, 
-                ce monstre de puissance vous garantit des performances exceptionnelles dans tous vos jeux préférés. 
-                Préparez-vous à vivre une expérience gaming incomparable en 4K Ultra.
-            </p>
-
+            <p class="product-specs"
+                       th:text="${product.description}">
+                        Description produit
+                    </p>
             <div class="quantity-selector">
                 <label>Quantité :</label>
                 <div class="quantity-controls">
@@ -86,8 +82,7 @@
             </div>
         </div>
     </div>
-
-    <!-- Tabs Section -->
+	
     <section class="tabs-section">
         <div class="tabs">
             <button class="tab active" onclick="openTab(event, 'description')">Description</button>
@@ -95,77 +90,20 @@
         
         <div class="tab-content">
             <div id="description" class="tab-panel active">
-                <h3>Description détaillée</h3>
-                <p>
-                    L'Ordinateur Gaming Ultra X représente le summum de la technologie gaming moderne. 
-                    Conçu pour offrir des performances exceptionnelles, il intègre les composants les plus 
-                    avancés du marché pour vous garantir une expérience de jeu fluide et immersive.
-                </p>
-                <p>
-                    Son processeur Intel Core i9-14900K de dernière génération offre une puissance de calcul 
-                    impressionnante, tandis que la carte graphique NVIDIA RTX 4080 vous permet de profiter 
-                    des jeux les plus récents en 4K avec un framerate élevé. Les 32 Go de RAM DDR5 assurent 
-                    un multitâche fluide, même lors des sessions de gaming les plus intenses.
-                </p>
-                <p>
-                    Le système de refroidissement avancé garantit des températures optimales même sous forte 
-                    charge, et le SSD NVMe de 1 To offre des temps de chargement ultra-rapides. Le boîtier 
-                    RGB personnalisable ajoute une touche d'esthétique à votre setup gaming.
-                </p>
+               <p class="product-specs"
+                       th:text="${product.description}">
+                        Description produit
+                    </p>
             </div>
         </div>
     </section>
 
-    <!-- Related Products -->
-    <section class="related-products">
-        <h2>Produits similaires</h2>
-        <div class="related-container">
-            <div class="related-card">
-                <div class="related-image">🎮</div>
-                <div class="related-info">
-                    <h3>PC Gaming Titan</h3>
-                    <div class="related-rating">
-                        <span class="related-stars">★★★★★</span>
-                        <span>(176)</span>
-                    </div>
-                    <div class="related-price">2 999,99 €</div>
-                </div>
-            </div>
-            
-            <div class="related-card">
-                <div class="related-image">💼</div>
-                <div class="related-info">
-                    <h3>Station de Travail Pro</h3>
-                    <div class="related-rating">
-                        <span class="related-stars">★★★★★</span>
-                        <span>(89)</span>
-                    </div>
-                    <div class="related-price">2 499,99 €</div>
-                </div>
-            </div>
-            
-            <div class="related-card">
-                <div class="related-image">⚡</div>
-                <div class="related-info">
-                    <h3>PC Gaming Compact</h3>
-                    <div class="related-rating">
-                        <span class="related-stars">★★★★★</span>
-                        <span>(215)</span>
-                    </div>
-                    <div class="related-price">1 099,99 €</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer>
         <p>&copy; 2026 SHOP - Tous droits réservés</p>
         <p>Contactez-nous : contact@shop.com</p>
     </footer>
 
     <script>
-        // Quantity controls
         function incrementQuantity() {
             const input = document.getElementById('quantity');
             input.value = parseInt(input.value) + 1;
@@ -178,7 +116,6 @@
             }
         }
 
-        // Tabs functionality
         function openTab(evt, tabName) {
             const tabPanels = document.getElementsByClassName('tab-panel');
             for (let i = 0; i < tabPanels.length; i++) {

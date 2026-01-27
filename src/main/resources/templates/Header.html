@@ -1,4 +1,4 @@
-<header>
+<header th:fragment="header">
 	    <link rel="stylesheet" th:href="@{/css/header.css}">
         <div class="header-container">
             <div class="logo">
@@ -7,7 +7,7 @@
             
             <nav class="main-nav">
                 <a th:href="@{/}">Accueil</a>
-				 <a th:href="@{/categorie/ordinateur}">Ordinateur</a>
+                <a th:href="@{/categorie/ordinateur}">Ordinateur</a>
                 <a th:href="@{/categorie/pc_portable}">Pc Portable</a>
                 <a th:href="@{/categorie/téléphone}">Téléphone</a>
             </nav>
@@ -15,14 +15,14 @@
             <div class="actions">
                 <a th:href="@{/account}">
                 	<div class="icon">
-                		<img th:src="@{/images/user.png}" alt="Logo">
+                		<img th:src="@{/images/user.png}" alt="Utilisateur">
                 	</div>
                 </a>
                 <a th:href="@{/panier}">
-                <div class="icon">
-                	<img th:src="@{/images/panier.png}" alt="Logo">
-                </div>
+                    <div class="icon">
+                		<img th:src="@{/images/panier.png}" alt="Panier">
+                    </div>
                 </a>
             </div>
         </div>
-    </header>
+</header>

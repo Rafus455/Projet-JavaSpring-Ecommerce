@@ -28,18 +28,16 @@ public class CategoryController {
     @GetMapping("/{name}")
     public String category(@PathVariable String name, Model model) {
 
-        // Récupération de la catégorie
         Category category = categoryRepo.findByNameIgnoreCase(name);
         if (category == null) {
-            return "404"; // Page d'erreur si catégorie inexistante
+            return "404";
         }
 
         model.addAttribute("category", category);
 
-        // Récupération des produits de cette catégorie
         List<Product> products = productRepo.findByCategory(category);
         model.addAttribute("products", products);
 
-        return "categorie"; // fichier Thymeleaf
+        return "categorie";
     }
 }

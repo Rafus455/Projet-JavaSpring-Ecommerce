@@ -14,13 +14,10 @@
         <p>Vous avez <strong>3 articles</strong> dans votre panier</p>
     </div>
 
-    <!-- Main Container -->
     <div class="main-container">
         
-        <!-- Cart Items -->
         <div class="cart-items">
             
-            <!-- Trust Badges -->
             <div class="trust-badges">
                 <div class="trust-badge">
                     <div class="trust-badge-icon">🚚</div>
@@ -36,7 +33,6 @@
                 </div>
             </div>
 
-            <!-- Cart Item 1 -->
             <div class="cart-item">
                 <div class="item-image">💻</div>
                 <div class="item-details">
@@ -58,7 +54,6 @@
                 </div>
             </div>
 
-            <!-- Cart Item 2 -->
             <div class="cart-item">
                 <div class="item-image">🎧</div>
                 <div class="item-details">
@@ -80,7 +75,6 @@
                 </div>
             </div>
 
-            <!-- Cart Item 3 -->
             <div class="cart-item">
                 <div class="item-image">⌨️</div>
                 <div class="item-details">
@@ -104,7 +98,6 @@
 
         </div>
 
-        <!-- Cart Summary -->
         <div class="cart-summary">
             <h2>Récapitulatif</h2>
             
@@ -156,21 +149,18 @@
 
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2026 SHOP - Tous droits réservés</p>
         <p>Contactez-nous : contact@shop.com</p>
     </footer>
 
     <script>
-        // Prix unitaires des produits
         const prices = {
             1: 1699.99,
             2: 129.99,
             3: 89.99
         };
 
-        // Mettre à jour la quantité
         function updateQuantity(itemId, change) {
             const qtyInput = document.getElementById(`qty-${itemId}`);
             let currentQty = parseInt(qtyInput.value);
@@ -182,7 +172,6 @@
             }
         }
 
-        // Supprimer un article
         function removeItem(itemId) {
             if (confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
                 const cartItem = document.querySelector(`#qty-${itemId}`).closest('.cart-item');
@@ -197,7 +186,6 @@
             }
         }
 
-        // Mettre à jour les totaux
         function updateTotals() {
             let subtotal = 0;
             
@@ -217,7 +205,6 @@
             document.getElementById('total').textContent = total.toFixed(2) + ' €';
         }
 
-        // Mettre à jour le nombre d'articles dans le badge
         function updateCartCount() {
             let totalItems = 0;
             for (let itemId in prices) {
@@ -238,12 +225,10 @@
             }
         }
 
-        // Passer commande
         function checkout() {
             alert('Redirection vers la page de paiement...');
         }
 
-        // Continuer les achats
         function continueShopping() {
             window.location.href = '#computers';
         }

@@ -8,16 +8,13 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <div th:replace="header :: header"></div>
 
-<!-- BREADCRUMB -->
 <div class="breadcrumb">
     <a th:href="@{/index}">Accueil</a> /
     <span th:text="${category.name}">Catégorie</span>
 </div>
 
-<!-- PAGE HEADER -->
 <div class="page-header">
     <h1 th:text="${category.name}">Ordinateurs</h1>
     <p th:text="${category.description}">
@@ -25,10 +22,8 @@
     </p>
 </div>
 
-<!-- MAIN CONTAINER -->
 <div class="main-container">
 
-    <!-- SIDEBAR FILTERS (statique pour l’instant) -->
     <aside class="sidebar">
 
         <div class="filter-section">
@@ -50,7 +45,6 @@
         <button class="apply-filters-btn">Appliquer les filtres</button>
     </aside>
 
-    <!-- PRODUCTS SECTION -->
     <div class="products-section">
 
         <!-- TOOLBAR -->
@@ -72,12 +66,12 @@
             </div>
         </div>
 
-        <!-- PRODUCTS GRID -->
         <div class="products-grid">
 
             <!-- PRODUIT -->
             <div class="product-card" th:each="product : ${products}">
-
+              <a th:href="@{/produit/{id}(id=${product.id})}">
+				
                 <div class="product-image">
 					<img th:src="@{${product.pathImage}}" alt="Produit">
                     <span class="product-badge new"
@@ -85,10 +79,11 @@
                         Nouveau
                     </span>
                 </div>
+               </a>
 
                 <div class="product-info">
                     <div class="product-category"
-                         th:text="${category.name}">
+                         th:text="${category.name}">x	
                     </div>
 
                     <h3 class="product-name"
@@ -108,7 +103,7 @@
                             </div>
                         </div>
 
-                        <a th:href="@{/produit/{id}(id=${product.id})}"
+                        <a th:href="@{/panier}"
                            class="add-to-cart-icon">
                             🛒
                         </a>
@@ -116,7 +111,6 @@
                 </div>
             </div>
 
-            <!-- MESSAGE SI VIDE -->
             <div th:if="${#lists.isEmpty(products)}">
                 <p>Aucun produit dans cette catégorie.</p>
             </div>
@@ -126,11 +120,10 @@
     </div>
 </div>
 
-<!-- FOOTER -->
-<footer>
-    <p>&copy; 2026 SHOP - Tous droits réservés</p>
-    <p>Contact : contact@shop.com</p>
-</footer>
+		<footer>
+		    <p>&copy; 2026 SHOP - Tous droits réservés</p>
+		    <p>Contact : contact@shop.com</p>
+		</footer>
 
 </body>
 </html>
