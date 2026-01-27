@@ -5,13 +5,16 @@
     <title th:text="${category.name} + ' | SHOP'">Catégorie</title>
     <link rel="stylesheet" th:href="@{/css/categorie.css}">
     
+    <style>
+        
+    </style>
 </head>
 <body>
 
 <div th:replace="header :: header"></div>
 
 <div class="breadcrumb">
-    <a th:href="@{/index}">Accueil</a> /
+    <a th:href="@{/}">Accueil</a> /
     <span th:text="${category.name}">Catégorie</span>
 </div>
 
@@ -68,22 +71,27 @@
 
         <div class="products-grid">
 
-            <!-- PRODUIT -->
             <div class="product-card" th:each="product : ${products}">
               <a th:href="@{/produit/{id}(id=${product.id})}">
 				
                 <div class="product-image">
-					<img th:src="@{${product.pathImage}}" alt="Produit">
+                    <img th:src="@{${product.pathImage}}" alt="Produit">
+                    
+                    <span class="product-badge out"
+                          th:if="${product.stock == 0}">
+                        Rupture
+                    </span>
+
                     <span class="product-badge new"
-                          th:if="true">
+                          th:if="${product.stock > 0}">
                         Nouveau
                     </span>
                 </div>
                </a>
 
                 <div class="product-info">
-                    <div class="product-category"
-                         th:text="${category.name}">x	
+                    <div class="product-category"	
+                         th:text="${category.name}">Catégorie	
                     </div>
 
                     <h3 class="product-name"
@@ -99,14 +107,20 @@
                     <div class="product-bottom">
                         <div>
                             <div class="product-price">
-                                 <span th:text="${product.price}">0.00 €</span>
+                                 <span th:text="${product.price} + ' € '"></span>
                             </div>
                         </div>
 
                         <a th:href="@{/panier}"
-                           class="add-to-cart-icon">
+                           class="add-to-cart-icon"
+                           th:if="${product.stock > 0}">
                             🛒
                         </a>
+                        <span class="add-to-cart-icon" 
+                              style="background-color: #ccc; cursor: not-allowed;"
+                              th:if="${product.stock == 0}">
+                            🚫
+                        </span>
                     </div>
                 </div>
             </div>
@@ -120,10 +134,10 @@
     </div>
 </div>
 
-		<footer>
-		    <p>&copy; 2026 SHOP - Tous droits réservés</p>
-		    <p>Contact : contact@shop.com</p>
-		</footer>
+<footer>
+    <p>&copy; 2026 SHOP - Tous droits réservés</p>
+    <p>Contact : contact@shop.com</p>
+</footer>
 
 </body>
 </html>

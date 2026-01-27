@@ -9,7 +9,6 @@ body {
     background-color: #f5f5f5;
 }
 
-/* Breadcrumb */
 .breadcrumb {
     max-width: 1400px;
     margin: 30px auto;
@@ -46,7 +45,6 @@ body {
     color: #666;
 }
 
-/* Main Container */
 .main-container {
     max-width: 1400px;
     margin: 0 auto;
@@ -56,7 +54,6 @@ body {
     gap: 40px;
 }
 
-/* Sidebar Filters */
 .sidebar {
     background-color: white;
     padding: 30px;
@@ -126,14 +123,12 @@ body {
     transform: translateY(-2px);
 }
 
-/* Products Section */
 .products-section {
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
-/* Toolbar */
 .toolbar {
     background-color: white;
     padding: 20px 30px;
@@ -174,7 +169,6 @@ body {
     background-color: white;
 }
 
-/* Products Grid */
 .products-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -187,7 +181,6 @@ body {
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
 }
@@ -195,6 +188,11 @@ body {
 .product-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.product-card > a {
+    text-decoration: none;
+    color: inherit;
 }
 
 .product-image {
@@ -209,9 +207,11 @@ body {
 }
 
 .product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
 }
 
 .product-badge {
@@ -302,7 +302,6 @@ body {
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
-/* Message si vide */
 .products-grid > div:only-child {
     grid-column: 1 / -1;
     text-align: center;
@@ -317,7 +316,6 @@ body {
     color: #666;
 }
 
-/* Footer */
 footer {
     background-color: #2c3e50;
     color: white;
@@ -330,7 +328,6 @@ footer p {
     margin: 10px 0;
 }
 
-/* Responsive */
 @media (max-width: 1200px) {
     .products-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -349,4 +346,22 @@ footer p {
     .products-grid {
         grid-template-columns: 1fr;
     }
+ 
+ .product-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #2ecc71;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.product-badge.out {
+            background-color: #e74c3c !important;
+}
+   
 }

@@ -2,36 +2,40 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>Détail Produit</title>
     <link rel="stylesheet" th:href="@{/css/produit.css}">
-	    											
+    <style>
+        /* Ajout de sécurité pour le badge rouge */
+        .product-badge.out {
+            background-color: #e74c3c !important;
+        }
+    </style>
 </head>
 <body>
 
 	<div th:replace="header :: header"></div>
 	
 	<div class="breadcrumb">
-        <a href="#home">Accueil</a> / <a href="#computers">Ordinateurs</a> / <div th:text="${product.name}"></div>
+        <a th:href="@{/}">Accueil</a> / <a th:href="@{/categorie/ordinateur}">Ordinateurs</a> / <div th:text="${product.name}"></div>
     </div>
 
     <div class="product-container">
         <div class="product-images">
             <div class="main-image-container">
                 <div class="main-image">
-                <img th:src="@{${product.pathImage}}" alt="Produit">
-                    <span class="product-badge new"
-                          th:if="true">
-                        Nouveau
-                    </span>
+                    <img th:src="@{${product.pathImage}}" alt="Produit">
+                    
+                    <span class="product-badge out" th:if="${product.stock == 0}">Rupture</span>
+                    <span class="product-badge new" th:if="${product.stock > 0}">Nouveau</span>
+                    
                 </div>
             </div>
         </div>
 
         <div class="product-info">
             <div class="product-category">Gaming</div>
-					<div class="product-category"
-                         th:text="${product.name}">x	
-                    </div>            
+            <div class="product-category" th:text="${product.name}">x</div>            
+            
             <div class="product-rating">
                 <span class="stars">★★★★★</span>
             </div>
@@ -42,10 +46,10 @@
                 </div>
             </div>
 
-            <p class="product-specs"
-                       th:text="${product.description}">
-                        Description produit
-                    </p>
+            <p class="product-specs" th:text="${product.description}">
+                Description produit
+            </p>
+
             <div class="quantity-selector">
                 <label>Quantité :</label>
                 <div class="quantity-controls">
@@ -54,11 +58,23 @@
                     <button class="quantity-btn" onclick="incrementQuantity()">+</button>
                 </div>
             </div>
+            
+           <div class="stock-section">
+			    <span class="stock-label">Stock disponible :</span>
+                <!-- Gestion de la couleur du stock (Vert ou Rouge) -->
+			     <span class="stock-value" 
+			          th:text="${product.stock}"
+			          th:classappend="${product.stock == 0} ? 'out' : ''">
+			        0
+			    </span>
+			</div>
 
             <div class="action-buttons">
-                <button class="add-to-cart-btn">
-                    🛒 Ajouter au panier
-                </button>
+                <button class="add-to-cart-btn" 
+				        th:disabled="${product.stock == 0}"
+				        th:style="${product.stock == 0} ? 'opacity: 0.5; cursor: not-allowed;' : ''">
+				    🛒 Ajouter au panier
+				</button>
                 <button class="buy-now-btn">Acheter maintenant</button>
             </div>
 
@@ -118,6 +134,10 @@
                 tabs[i].classList.remove('active');
             }
             
+            // J'ai corrigé "currentTarxget" en "currentTarget" ci-dessous
             document.getElementById(tabName).classList.add('active');
             evt.currentTarget.classList.add('active');
         }
+    </script>
+</body>
+</html>
