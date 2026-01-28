@@ -6,9 +6,10 @@ async function addToCart(element) {
         name: element.dataset.name,
         category: element.dataset.category,
         price: parseFloat(element.dataset.price),
-        quantity: 1
+        quantity: 1,
+		path_image: element.dataset.pathimage
     };
-
+	console.log("ejehj", element.dataset.pathImage)
     let orderId = localStorage.getItem("orderId");
     let panier = JSON.parse(localStorage.getItem("panier")) || [];
 
@@ -39,15 +40,20 @@ async function addToCart(element) {
                 headers: { "Content-Type": "application/json" },
             });
 
-			console.log(response);
+			console.log(updateItem);
 			if (!updateItem.ok) {
-			console.log(response.message);
-                throw new Error("Erreur création commande");
+				const errorData = await updateItem.json();
+
+				  console.log(errorData.message);
+				if(errorData.message === 'Stock insuffisant') {
+					alert("Désolé le dernier produit vient d'être acheter");
+					window.location.reload();
+				    return;
+				} else {
+                throw new Error("Erreur lors de la création d'une commande");
+				}
             }
-				console.log("eee");
-
         } else {
-
             const response = await fetch("/api/order-items", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -57,8 +63,8 @@ async function addToCart(element) {
                     quantity: 1
                 })
         	});
+
 			if (!response.ok) {
-				console.log(response.message);
                 throw new Error("Erreur création commande");
             }
 	

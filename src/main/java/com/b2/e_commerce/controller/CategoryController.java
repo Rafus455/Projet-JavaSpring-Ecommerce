@@ -4,7 +4,9 @@ import com.b2.e_commerce.entity.Category;
 import com.b2.e_commerce.entity.Product;
 import com.b2.e_commerce.repository.CategoryRepository;
 import com.b2.e_commerce.repository.ProductRepository;
+import com.b2.e_commerce.service.AuthService;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,29 +20,35 @@ import java.util.List;
 @RequestMapping("/categorie")
 public class CategoryController {
 
+    private final AuthService authService;
     private final CategoryRepository categoryRepo;
     private final ProductRepository productRepo;
 
-    public CategoryController(CategoryRepository categoryRepo, ProductRepository productRepo) {
+    public CategoryController(CategoryRepository categoryRepo, ProductRepository productRepo, AuthService authService) {
         this.categoryRepo = categoryRepo;
         this.productRepo = productRepo;
+        this.authService = authService;
     }
 
     @GetMapping("/{name}")
-    public String category(@PathVariable String name, Model model) {
-        Category category = categoryRepo.findByNameIgnoreCase(name);
-        if (category == null) {
-            return "404"; 
-        }
-
-        model.addAttribute("category", category);
-        List<Product> products = productRepo.findByCategory(category);
-        model.addAttribute("products", products);
-        model.addAttribute("allCategories", categoryRepo.findAll());
-
-        return "categorie";
+    public String category(@PathVariable String name, Model model, Authentication authentication) {
+    	return authService.getAuthenticatedUser(authentication)
+	        .map(user -> {
+	        	Category category = categoryRepo.findByNameIgnoreCase(name);
+	            if (category == null) {
+	                return "404"; 
+	            }
+	
+	            model.addAttribute("category", category);
+	            List<Product> products = productRepo.findByCategory(category);
+	            model.addAttribute("products", products);
+	            model.addAttribute("allCategories", categoryRepo.findAll());
+	
+	            return "categorie";
+	        })
+	        .orElse("redirect:/logout");
     }
-    
+
     @GetMapping("/id/{id}")
     public String voirCategorie(@PathVariable Long id,
                                 @RequestParam(required = false) Double min,

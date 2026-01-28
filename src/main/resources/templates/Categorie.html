@@ -130,7 +130,7 @@
                             </div>
                         </div>
 
-                        <a href="@{/panier}"
+                        <a href="#"
                            class="add-to-cart-icon"
                            th:if="${product.stock > 0}"
 						   th:data-id="${product.id}"
@@ -138,6 +138,7 @@
 						   th:data-category="${category.name}"
 						   th:data-price="${product.price}"
 						   th:data-orderItemId=${orderItemId}
+						   th:data-pathimage=${product.pathImage}
 						   onclick="addToCart(this)">
 						   🛒
 						</a>
@@ -163,6 +164,8 @@
     <p>&copy; 2026 SHOP - Tous droits réservés</p>
     <p>Contact : contact@shop.com</p>
 </footer>
+
+    <script th:src="@{/js/categorie.js}"></script>
 
 </body>
 </html>

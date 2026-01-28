@@ -61,8 +61,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
                 .requestMatchers(
-	            	"/api/**",
-	            	"/ordinateur"
+	            	"/api/**"
                 ).authenticated()
                 
                 .requestMatchers("/admin/dashboard").hasRole("ADMIN")

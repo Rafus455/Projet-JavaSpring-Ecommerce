@@ -29,7 +29,6 @@ public class AdminOrderItemController {
             @PathVariable Long itemId,
             @RequestParam int quantity
     ) {
-    	System.out.println("euhh");
         orderItemService.updateItemQuantity(itemId, quantity);
     }
 
