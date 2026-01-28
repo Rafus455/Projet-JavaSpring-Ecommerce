@@ -28,25 +28,46 @@
 <div class="main-container">
 
     <aside class="sidebar">
+	    <form th:action="@{/categorie/id/{id}(id=${category.id})}" method="get">
+	        
+	        <div class="filter-section">
+	            <h3>Prix</h3>
+	            <div class="price-inputs">
+	                <input type="number" name="min" placeholder="Min" th:value="${param.min}">
+	                <span>-</span>
+	                <input type="number" name="max" placeholder="Max" th:value="${param.max}">
+	            </div>
+	        </div>
+	
+	        <div class="filter-section">
+			    <h3>Type</h3>
+			    <label>
+			        <input type="checkbox" 
+			               onclick="window.location.href='/categorie/ordinateur'"
+			               th:checked="${category.name == 'ordinateur'}">
+			        Pc Fix
+			    </label>
+			
+			    <label>
+			        <input type="checkbox" 
+			               onclick="window.location.href='/categorie/pc_portable'"
+			               th:checked="${category.name == 'pc_portable'}"> 
+			        Pc Portable
+			    </label>
+			
+			    <label>
+			        <input type="checkbox" 
+			               onclick="window.location.href='/categorie/téléphone'"
+			               th:checked="${category.name == 'téléphone'}"> 
+			        Téléphone
+			    </label>
+			</div>
+	
+	        <button type="submit" class="apply-filters-btn">Appliquer les filtres</button>
+	    
+	    </form>
 
-        <div class="filter-section">
-            <h3>Prix</h3>
-            <div class="price-inputs">
-                <input type="number" placeholder="Min">
-                <span>-</span>
-                <input type="number" placeholder="Max">
-            </div>
-        </div>
-
-        <div class="filter-section">
-            <h3>Type</h3>
-            <label><input type="checkbox"> Gaming</label>
-            <label><input type="checkbox"> Bureau</label>
-            <label><input type="checkbox"> Portable</label>
-        </div>
-
-        <button class="apply-filters-btn">Appliquer les filtres</button>
-    </aside>
+	</aside>
 
     <div class="products-section">
 
@@ -61,10 +82,8 @@
             <div class="sort-options">
                 <label>Trier par :</label>	
                 <select>
-                    <option>Pertinence</option>
                     <option>Prix croissant</option>
                     <option>Prix décroissant</option>
-                    <option>Nouveautés</option>
                 </select>
             </div>
         </div>
