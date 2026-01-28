@@ -5,7 +5,6 @@ import com.b2.e_commerce.entity.Product;
 import com.b2.e_commerce.repository.CategoryRepository;
 import com.b2.e_commerce.repository.ProductRepository;
 import com.b2.e_commerce.service.AuthService;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/categorie")
@@ -53,25 +53,37 @@ public class CategoryController {
     public String voirCategorie(@PathVariable Long id,
                                 @RequestParam(required = false) Double min,
                                 @RequestParam(required = false) Double max,
+                                @RequestParam(required = false) Boolean nouveau,
+                                @RequestParam(required = false) Boolean rupture,
                                 Model model) {
-      
-        Category category = categoryRepo.findById(id).orElse(null);
-        
-        if (category == null) {
-            return "redirect:/";
-        }
-        
-        double minPrice = (min != null) ? min : 0;
-        double maxPrice = (max != null) ? max : 1000000; 
 
+        Category category = categoryRepo.findById(id).orElse(null);
+        if (category == null) return "redirect:/";
+
+        model.addAttribute("allCategories", categoryRepo.findAll());
+
+        double minPrice = (min != null) ? min : 0;
+        double maxPrice = (max != null) ? max : 1000000;
         List<Product> products = productRepo.findByCategoryAndPriceBetween(category, minPrice, maxPrice);
-        
+
+        if (Boolean.TRUE.equals(rupture)) {
+            products = products.stream()
+                    .filter(p -> p.getStock() == 0)
+                    .collect(Collectors.toList());
+        }
+
+        if (Boolean.TRUE.equals(nouveau)) {
+            products = products.stream()
+                    .filter(Product::isNew)
+                    .collect(Collectors.toList());
+        }
+
         model.addAttribute("category", category);
         model.addAttribute("products", products);
-        
+
         model.addAttribute("minPrice", minPrice);
         model.addAttribute("maxPrice", maxPrice);
-        
+
         return "categorie";
     }
 }

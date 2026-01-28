@@ -11,15 +11,14 @@
 </head>
 <body>
 
-<div th:replace="header :: header"></div>
-
+<div th:replace="~{header :: header}"></div>
 <div class="breadcrumb">
     <a th:href="@{/}">Accueil</a> /
     <span th:text="${category.name}">Catégorie</span>
 </div>
 
 <div class="page-header">
-    <h1 th:text="${category.name}">Ordinateurs</h1>
+    <h1 th:text="${category.name.replace('_', ' ')}">Ordinateurs</h1>
     <p th:text="${category.description}">
         Découvrez notre sélection de produits
     </p>
@@ -50,7 +49,7 @@
 			
 			    <label>
 			        <input type="checkbox" 
-			               onclick="window.location.href='/categorie/pc_portable'"
+			               onclick="window.location.href='/categorie/Ordinateur_de_bureau'"
 			               th:checked="${category.name == 'pc_portable'}"> 
 			        Pc Portable
 			    </label>
@@ -60,6 +59,22 @@
 			               onclick="window.location.href='/categorie/téléphone'"
 			               th:checked="${category.name == 'téléphone'}"> 
 			        Téléphone
+			    </label>
+			</div>
+			
+			<div class="filter-section">
+			    <h3>Filtrer par :</h3>
+			    <label>
+			        <input type="checkbox" name="nouveau" 
+			               value="true" 
+			               th:checked="${param.nouveau != null}"> 
+			        Nouveauté
+			    </label>
+			    <label>
+			        <input type="checkbox" name="rupture" 
+			               value="true" 
+			               th:checked="${param.rupture != null}"> 
+			        Rupture de stock
 			    </label>
 			</div>
 	
@@ -94,18 +109,17 @@
               <a th:href="@{/produit/{id}(id=${product.id})}">
 				
                 <div class="product-image">
-                    <img th:src="@{${product.pathImage}}" alt="Produit">
-                    
-                    <span class="product-badge out"
-                          th:if="${product.stock == 0}">
-                        Rupture
-                    </span>
-
-                    <span class="product-badge new"
-                          th:if="${product.stock > 0}">
-                        Nouveau
-                    </span>
-                </div>
+				    <img th:src="@{${product.pathImage}}" alt="Produit">
+				    
+				    <span class="product-badge out"
+				          th:if="${product.stock == 0}">
+				        Rupture
+				    </span>
+					<span class="product-badge new"
+				          th:if="${product.stock > 0 and product.new}">
+				        Nouveau
+				    </span>
+				</div>
                </a>
 
                 <div class="product-info">

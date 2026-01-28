@@ -116,4 +116,11 @@ public class Product {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+    
+    public boolean isNew() {
+        if (this.createdAt == null) {
+            return false;
+        }
+        return this.createdAt.isAfter(LocalDateTime.now().minusDays(1));
+    }
 }
