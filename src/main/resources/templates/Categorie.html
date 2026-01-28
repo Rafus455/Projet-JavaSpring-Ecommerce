@@ -130,11 +130,17 @@
                             </div>
                         </div>
 
-                        <a th:href="@{/panier}"
+                        <a href="@{/panier}"
                            class="add-to-cart-icon"
-                           th:if="${product.stock > 0}">
-                            🛒
-                        </a>
+                           th:if="${product.stock > 0}"
+						   th:data-id="${product.id}"
+						   th:data-name="${product.name}"
+						   th:data-category="${category.name}"
+						   th:data-price="${product.price}"
+						   th:data-orderItemId=${orderItemId}
+						   onclick="addToCart(this)">
+						   🛒
+						</a>
                         <span class="add-to-cart-icon" 
                               style="background-color: #ccc; cursor: not-allowed;"
                               th:if="${product.stock == 0}">

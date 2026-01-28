@@ -1,9 +1,9 @@
 package com.b2.e_commerce.controller;
 
-import com.b2.e_commerce.entity.Product;
-import com.b2.e_commerce.entity.User;
-import com.b2.e_commerce.repository.ProductRepository;
-import com.b2.e_commerce.repository.UserRepository;
+import com.b2.e_commerce.dto.ProductResponseDTO;
+import com.b2.e_commerce.service.AuthService;
+import com.b2.e_commerce.service.ProductService;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,19 +13,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class PageController {
 
-    private final UserRepository userRepository;
-    private final ProductRepository productRepository; 
+    private final AuthService authService;
+    private final ProductService productService;
 
-    public PageController(UserRepository userRepository, ProductRepository productRepository) {
-        this.userRepository = userRepository;
-        this.productRepository = productRepository; 
+    public PageController(AuthService authService, ProductService productService) {
+        this.authService = authService;
+        this.productService = productService;
     }
 
     @GetMapping("/login")
     public String login(Authentication authentication) {
-        if (authentication != null && authentication.isAuthenticated()) {
+    	if (authentication != null && authentication.isAuthenticated()) {
             return "redirect:/account";
         }
+
         return "login";
     }
 
@@ -41,13 +42,13 @@ public class PageController {
 
     @GetMapping("/account")
     public String account(Authentication authentication, Model model) {
-        if (authentication != null && authentication.isAuthenticated()) {
-            String mail = authentication.getName();
-            User user = userRepository.findByMail(mail).orElseThrow();
-            model.addAttribute("user", user);
-            return "account";
-        }
-        return "redirect:/login";
+
+    	return authService.getAuthenticatedUser(authentication)
+    	        .map(user -> {
+    	            model.addAttribute("user", user);
+    	            return "account";
+    	        })
+    	        .orElse("redirect:/logout");
     }
 
     @GetMapping("/admin/dashboard")
@@ -56,26 +57,23 @@ public class PageController {
     }
 
     @GetMapping("/panier")
-    public String panier(Authentication authentication, Model model) {
-        if (authentication != null && authentication.isAuthenticated()) {
-            String mail = authentication.getName();
-            User user = userRepository.findByMail(mail).orElseThrow();
-            model.addAttribute("user", user);
-            return "panier";
-        }
-        return "redirect:/login";
-    }
+    public String pannier(Authentication authentication, Model model) {
 
+    	return authService.getAuthenticatedUser(authentication)
+    	        .map(user -> {
+    	            model.addAttribute("user", user);
+    	            return "panier";
+    	        })
+    	        .orElse("redirect:/logout");
+    }
+    
     @GetMapping("/produit/{id}")
     public String produit(@PathVariable Long id, Model model) {
-        Product product = productRepository.findById(id).orElseThrow();
-        
+    	ProductResponseDTO product = productService.findById(id);
+
         model.addAttribute("product", product);
-        if (product.getCategory() != null) {
-            model.addAttribute("category", product.getCategory());
-        }
+        model.addAttribute("category", product.getCategoryName());
 
         return "produit";
     }
-
 }
