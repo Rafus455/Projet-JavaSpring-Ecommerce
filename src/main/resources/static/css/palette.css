@@ -1,0 +1,25 @@
+:root {
+    --primary-dark: #0F2854;
+    --primary: #1C4D8D;
+    --primary-light: #4988C4;
+    --primary-light-rgb: 73,136,196;
+    --text-on-primary: #ffffff;
+}
+
+.bg-primary { background-color: var(--primary); }
+.bg-primary-dark { background-color: var(--primary-dark); }
+.text-primary { color: var(--primary); }
+.btn-primary { background-color: var(--primary); color: var(--text-on-primary); }
+
+button,
+.btn,
+.btn-primary,
+.add-to-cart,
+.add-to-cart-btn,
+.apply-filters-btn,
+.checkout-btn,
+.promo-btn,
+.continue-shopping,
+.shop-btn {
+    color: var(--text-on-primary) !important;
+}

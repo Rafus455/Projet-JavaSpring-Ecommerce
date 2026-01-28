@@ -11,52 +11,21 @@
 
     <!-- Hero Section -->
     <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source th:src="@{/videos/intro.mp4}" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+        <div class="hero-overlay" aria-hidden="true"></div>
         <div class="hero-content">
-        <img th:src="@{/images/find_pc.png}" alt="Logo">
             <h1>Bienvenue sur notre boutique</h1>
             <p>Découvrez nos produits exceptionnels</p>
-			<a href="#new" class="hero-btn" style="text-decoration: none; display: inline-block;">Découvrir</a>       
-		</div>
+            <a href="#new" class="hero-btn" style="text-decoration: none; display: inline-block;">Découvrir</a>       
+        </div>
     </section>
 
     <section class="items-section" id="new">
         <h2>Nouveautés</h2>
-        <div class="items-container">
-            <div class="item-card">
-                <div class="item-image">
-                	<img th:src="@{/images/poulpe.webp}" alt="Logo">
-                </div>
-                <div class="item-info">
-                    <h3>Produit Gaming</h3>
-                    <p>Description du produit nouvelle génération</p>
-                    <div class="item-price">49,99 €</div>
-                    <button class="add-to-cart">Ajouter au panier</button>
-                </div>
-            </div>
-            
-            <div class="item-card">
-                <div class="item-image">
-                	<img th:src="@{/images/poulpe.webp}" alt="Logo">
-                </div>
-                <div class="item-info">
-                    <h3>Ordinateur Pro</h3>
-                    <p>Performances exceptionnelles pour tous</p>
-                    <div class="item-price">899,99 €</div>
-                    <button class="add-to-cart">Ajouter au panier</button>
-                </div>
-            </div>
-            
-            <div class="item-card">
-                <div class="item-image">
-                	<img th:src="@{/images/poulpe.webp}" alt="Logo">
-                </div>
-                <div class="item-info">
-                    <h3>Casque Audio</h3>
-                    <p>Son immersif et qualité premium</p>
-                    <div class="item-price">129,99 €</div>
-                    <button class="add-to-cart">Ajouter au panier</button>
-                </div>
-            </div>
+        <div class="items-container" id="nouveautes">
         </div>
         <div class="separator"></div>
     </section>
@@ -64,42 +33,7 @@
     <!-- Best Items -->
     <section class="items-section" id="best">
         <h2>Meilleures ventes</h2>
-        <div class="items-container">
-            <div class="item-card">
-                <div class="item-image">
-                	<img th:src="@{/images/poulpe.webp}" alt="Logo">
-                </div>
-                <div class="item-info">
-                    <h3>Smartphone Elite</h3>
-                    <p>Technologie de pointe à portée de main</p>
-                    <div class="item-price">799,99 €</div>
-                    <button class="add-to-cart">Ajouter au panier</button>
-                </div>
-            </div>
-            
-            <div class="item-card">
-                <div class="item-image">
-                	<img th:src="@{/images/poulpe.webp}" alt="Logo">
-                </div>
-                <div class="item-info">
-                    <h3>Montre Connectée</h3>
-                    <p>Restez connecté en toute élégance</p>
-                    <div class="item-price">299,99 €</div>
-                    <button class="add-to-cart">Ajouter au panier</button>
-                </div>
-            </div>
-            
-            <div class="item-card">
-                <div class="item-image">
-                	<img th:src="@{/images/poulpe.webp}" alt="Logo">
-                </div>
-                <div class="item-info">
-                    <h3>Appareil Photo</h3>
-                    <p>Capturez vos meilleurs moments</p>
-                    <div class="item-price">1299,99 €</div>
-                    <button class="add-to-cart">Ajouter au panier</button>
-                </div>
-            </div>
+        <div class="items-container" id="best-items">
         </div>
     </section>
 
@@ -107,5 +41,7 @@
         <p>&copy; 2026 SHOP - Tous droits réservés</p>
         <p>Contactez-nous : contact@shop.com</p>
     </footer>
-</body>
+    </body>
+        <script th:src="@{/js/index.js}"></script>
+    </html>
 </html>

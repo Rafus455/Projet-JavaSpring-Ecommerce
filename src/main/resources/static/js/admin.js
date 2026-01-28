@@ -2,7 +2,6 @@
 let categoryMode = "create";
 let productMode = "create";
 let selectedImage = null;
-// Helper to include credentials (cookies) on same-origin API calls
 const apiFetch = (url, opts = {}) => fetch(url, Object.assign({ credentials: 'same-origin' }, opts));
 
 // NAVIGATION
@@ -254,7 +253,6 @@ function handleFile(file) {
 
     const reader = new FileReader();
     reader.onload = e => {
-        // show preview inside drop zone
         setDropZonePreview(e.target.result);
     };
     reader.readAsDataURL(file);
@@ -262,7 +260,6 @@ function handleFile(file) {
 
 function setDropZonePreview(url) {
     if (!dropZone) return;
-    // use img element inside drop zone for proper aspect ratio handling
     if (dropImage) {
         dropImage.src = url;
         dropImage.style.display = 'block';

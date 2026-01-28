@@ -43,13 +43,13 @@ body {
 
 .auth-container input:focus {
     outline: none;
-    border-color: #2563eb;
+    border-color: var(--primary);
 }
 
 .auth-container button {
     width: 100%;
     padding: 10px;
-    background: #1C4D8D;
+    background-color: var(--primary, #1C4D8D) !important;
     color: white;
     border: none;
     border-radius: 6px;
@@ -59,7 +59,7 @@ body {
 }
 
 .auth-container button:hover {
-    background: #1e40af;
+    background-color: var(--primary-dark, #0F2854) !important;
 }
 
 .auth-container p {
@@ -69,7 +69,7 @@ body {
 }
 
 .auth-container a {
-    color: #1C4D8D;
+    color: var(--primary);
     text-decoration: none;
 }
 

@@ -22,7 +22,7 @@ body {
 }
 
 .breadcrumb a {
-    color: #667eea;
+    color: var(--primary);
     text-decoration: none;
     transition: all 0.3s ease;
 }
@@ -95,7 +95,7 @@ body {
 }
 
 .product-category {
-    color: #667eea;
+    color: var(--primary);
     font-size: 24px;
     font-weight: 700;
     letter-spacing: 0.5px;
@@ -124,7 +124,7 @@ body {
 .product-price {
     font-size: 44px;
     font-weight: bold;
-    color: #667eea;
+    color: var(--primary);
 }
 
 .product-specs {
@@ -135,7 +135,7 @@ body {
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 10px;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid var(--primary);
 }
 
 /* Stock Section - AMÉLIORÉE */
@@ -256,7 +256,7 @@ body {
 .quantity-btn {
     width: 40px;
     height: 40px;
-    background-color: #667eea;
+    background-color: var(--primary);
     color: white;
     border: none;
     border-radius: 8px;
@@ -267,7 +267,7 @@ body {
 }
 
 .quantity-btn:hover {
-    background-color: #764ba2;
+    background-color: var(--primary-dark);
     transform: scale(1.1);
 }
 
@@ -290,7 +290,7 @@ body {
 .add-to-cart-btn {
     flex: 2;
     padding: 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     color: white;
     border: none;
     border-radius: 12px;
@@ -306,15 +306,15 @@ body {
 
 .add-to-cart-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 8px 25px rgba(var(--primary-light-rgb), 0.4);
 }
 
 .buy-now-btn {
     flex: 1.5;
     padding: 20px;
     background-color: white;
-    color: #667eea;
-    border: 3px solid #667eea;
+    color: var(--primary) !important;
+    border: 3px solid var(--primary);
     border-radius: 12px;
     font-size: 18px;
     font-weight: bold;
@@ -323,8 +323,8 @@ body {
 }
 
 .buy-now-btn:hover {
-    background-color: #667eea;
-    color: white;
+    background-color: var(--primary);
+    color: white !important;
     transform: translateY(-3px);
 }
 
@@ -389,13 +389,13 @@ body {
 }
 
 .tab.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);	
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); 	
     color: white;
 }
 
 /* Footer */
 footer {
-    background-color: #2c3e50;
+    background-color: var(--primary-dark);
     color: white;
     padding: 40px 50px;
     text-align: center;

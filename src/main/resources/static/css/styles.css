@@ -58,7 +58,7 @@ body {
 .product-button {
     padding: 15px 25px;
     font-size: 16px;
-    background-color: #3498db;
+    background-color: var(--primary);
     color: #ffffff;
     border: none;
     border-radius: 6px;
@@ -67,7 +67,7 @@ body {
 }
 
 .product-button:hover {
-    background-color: #2980b9;
+    background-color: var(--primary-dark);
 }
 
 /* Responsive */

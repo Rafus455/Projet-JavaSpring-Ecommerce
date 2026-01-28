@@ -50,14 +50,14 @@ form input {
 
 form input:focus {
     outline: none;
-    border-color: #4a6cf7;
+    border-color: var(--primary);
 }
 
 /* Bouton */
 form button {
     width: 100%;
     padding: 12px;
-    background-color: #4a6cf7;
+    background-color: var(--primary);
     color: #ffffff;
     font-size: 15px;
     font-weight: bold;
@@ -68,7 +68,7 @@ form button {
 }
 
 form button:hover {
-    background-color: #3b5ce0;
+    background-color: var(--primary-dark);
 }
 
 .logout-btn {
