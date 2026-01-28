@@ -40,10 +40,7 @@ public class OrderService {
         return mapToResponse(order);
     }
 
-    public OrderResponseDTO create(OrderRequestDTO dto) {
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("Commande avec id " + dto.getUserId() + " introuvable"));
-
+    public OrderResponseDTO create(OrderRequestDTO dto, User user) {
         CustomerOrder order = new CustomerOrder();
         order.setUser(user);
         order.setStatus(dto.getStatus());

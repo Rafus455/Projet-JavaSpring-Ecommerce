@@ -42,12 +42,6 @@ public class AdminOrderController {
         return orderService.findById(id);
     }
 
-    // CREATE
-    @PostMapping
-    public OrderResponseDTO create(@Valid @RequestBody OrderRequestDTO dto) {
-        return orderService.create(dto);
-    }
-
     // MODIFY
     @PutMapping("/{id}/status")
     public OrderResponseDTO updateStatus(@PathVariable Long id, @Valid @RequestBody OrderStatusUpdateDTO dto) {

@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
     <link rel="stylesheet" th:href="@{/css/panier.css}">
 </head>
+
 <body>
 
-	<div th:replace="header :: header"></div>
-	
-	 <div class="page-header">
+    <div th:replace="header :: header"></div>
+
+    <div class="page-header">
         <h1>Mon Panier</h1>
-        <p>Vous avez <strong>3 articles</strong> dans votre panier</p>
+        <p id="cart-count-text">
+            Vous avez <strong>0 article</strong> dans votre panier
+        </p>
     </div>
 
+    <!-- Main Container -->
     <div class="main-container">
-        
+
+        <!-- Cart Items -->
         <div class="cart-items">
-            
+
+            <!-- Trust Badges -->
             <div class="trust-badges">
                 <div class="trust-badge">
                     <div class="trust-badge-icon">🚚</div>
@@ -32,152 +39,124 @@
                     <div class="trust-badge-text">Retour sous 30 jours</div>
                 </div>
             </div>
-
-            <div class="cart-item">
-                <div class="item-image">💻</div>
-                <div class="item-details">
-                    <div class="item-category">Gaming</div>
-                    <div class="item-name">Ordinateur Gaming Ultra X</div>
-                    <div class="item-specs">
-                        Intel i9-14900K • 32 Go RAM • RTX 4080 • 1 To SSD
-                    </div>
-                    <div class="item-stock">✓ En stock</div>
-                </div>
-                <div class="item-actions">
-                    <div class="item-price">1 699,99 €</div>
-                    <div class="quantity-control">
-                        <button class="qty-btn" onclick="updateQuantity(1, -1)">-</button>
-                        <input type="number" class="qty-input" id="qty-1" value="1" min="1" readonly>
-                        <button class="qty-btn" onclick="updateQuantity(1, 1)">+</button>
-                    </div>
-                    <button class="remove-btn" onclick="removeItem(1)">🗑️ Supprimer</button>
-                </div>
-            </div>
-
-            <div class="cart-item">
-                <div class="item-image">🎧</div>
-                <div class="item-details">
-                    <div class="item-category">Audio</div>
-                    <div class="item-name">Casque Audio Premium</div>
-                    <div class="item-specs">
-                        Bluetooth 5.2 • Réduction de bruit active • 30h d'autonomie
-                    </div>
-                    <div class="item-stock">✓ En stock</div>
-                </div>
-                <div class="item-actions">
-                    <div class="item-price">129,99 €</div>
-                    <div class="quantity-control">
-                        <button data-product-id="1" data-action="reduce" class="qty-btn" onclick="updateQuantity(2, -1)">-</button>
-                        <input type="number" class="qty-input" id="qty-2" value="1" min="1" readonly>
-                        <button data-product-id="1" data-action="add" class="qty-btn" onclick="updateQuantity(2, 1)">+</button>
-                    </div>
-                    <button class="remove-btn" onclick="removeItem(2)">🗑️ Supprimer</button>
-                </div>
-            </div>
-
-            <div class="cart-item">
-                <div class="item-image">⌨️</div>
-                <div class="item-details">
-                    <div class="item-category">Accessoires</div>
-                    <div class="item-name">Clavier Mécanique RGB</div>
-                    <div class="item-specs">
-                        Switches mécaniques • Rétroéclairage RGB • Repose-poignet
-                    </div>
-                    <div class="item-stock low">⚠️ Plus que 3 en stock</div>
-                </div>
-                <div class="item-actions">
-                    <div class="item-price">89,99 €</div>
-                    <div class="quantity-control">
-                        <button class="qty-btn" onclick="updateQuantity(3, -1)">-</button>
-                        <input type="number" class="qty-input" id="qty-3" value="1" min="1" readonly>
-                        <button class="qty-btn" onclick="updateQuantity(3, 1)">+</button>
-                    </div>
-                    <button class="remove-btn" onclick="removeItem(3)">🗑️ Supprimer</button>
-                </div>
-            </div>
-
         </div>
 
+        <!-- Cart Summary -->
         <div class="cart-summary">
             <h2>Récapitulatif</h2>
-            
+
             <div class="summary-row">
-                <span class="summary-label">Sous-total (3 articles)</span>
-                <span class="summary-value" id="subtotal">1 919,97 €</span>
+                <span class="summary-label" id="summary-items">
+                    Sous-total (0 article)
+                </span>
+                <span class="summary-value" id="subtotal">0 €</span>
             </div>
-            
+
             <div class="summary-row">
                 <span class="summary-label">Livraison</span>
                 <span class="summary-value" style="color: #2ecc71;">Gratuite</span>
             </div>
-            
+
             <div class="summary-row">
                 <span class="summary-label">TVA (20%)</span>
-                <span class="summary-value" id="tax">383,99 €</span>
+                <span class="summary-value" id="tax">0 €</span>
             </div>
 
             <div class="summary-divider"></div>
 
             <div class="summary-total">
                 <span class="total-label">Total</span>
-                <span class="total-value" id="total">2 303,96 €</span>
-            </div>
-
-            <div class="promo-code">
-                <h3>Code promo</h3>
-                <div class="promo-input-group">
-                    <input type="text" class="promo-input" placeholder="Entrez votre code">
-                    <button class="promo-btn">Appliquer</button>
-                </div>
+                <span class="total-value" id="total">0 €</span>
             </div>
 
             <button class="checkout-btn" onclick="checkout()">
                 🔒 Passer la commande
             </button>
-            
-            <button class="continue-shopping" onclick="continueShopping()">
+
+            <button class="continue-shopping" onclick="history.back()">
                 ← Continuer mes achats
             </button>
 
             <div class="payment-methods">
                 <p>Moyens de paiement acceptés</p>
                 <div class="payment-icons">
-                    💳 🏦 💰
+                    <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 -9 58 58"
+                        fill="none">
+                        <rect x="0.5" y="0.5" width="57" height="39" rx="2.5" fill="url(#paint0_linear_545_4267)"
+                            stroke="#F1F1F1" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M21.825 19.4075H29.6782C29.6082 17.71 29.2127 15.9599 28.0131 14.8358C26.5842 13.4967 24.0813 13 21.8449 13C19.5172 13 16.943 13.5448 15.5065 14.9815C14.2678 16.2192 14 18.2105 14 19.9996C14 21.8737 14.5239 24.0536 15.8677 25.3093C17.2966 26.6453 19.612 27 21.8449 27C24.0141 27 26.3638 26.5995 27.7844 25.3311C29.201 24.0641 29.6906 21.9301 29.6906 19.9996V19.9906H21.825V19.4075ZM30.2053 19.9909V26.687H41.1298V26.6779C42.7283 26.5908 44 25.1495 44 23.3799C44 21.6095 42.7283 20.0758 41.1298 19.9879V19.9909H30.2053ZM41.0054 13.2804C42.5634 13.2804 43.8 14.6322 43.8 16.338C43.8 17.9528 42.6643 19.2716 41.2196 19.4076H30.2051V13.2706H40.6607C40.725 13.2627 40.8 13.2683 40.8733 13.2737C40.919 13.277 40.964 13.2804 41.0054 13.2804Z"
+                            fill="#FEFEFE" />
+                        <defs>
+                            <linearGradient id="paint0_linear_545_4267" x1="15.7319" y1="-5.06532" x2="1.63672"
+                                y2="38.2044" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#222E72" />
+                                <stop offset="0.591647" stop-color="#40CBFF" />
+                                <stop offset="1" stop-color="#3CB792" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px"
+                        height="800px" viewBox="-3.5 0 48 48" version="1.1">
+                        <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="Color-" transform="translate(-804.000000, -660.000000)" fill="#022B87">
+                                <path
+                                    d="M838.91167,663.619443 C836.67088,661.085983 832.621734,660 827.440097,660 L812.404732,660 C811.344818,660 810.443663,660.764988 810.277343,661.801472 L804.016136,701.193856 C803.892151,701.970844 804.498465,702.674333 805.292267,702.674333 L814.574458,702.674333 L816.905967,688.004562 L816.833391,688.463555 C816.999712,687.427071 817.894818,686.662083 818.95322,686.662083 L823.363735,686.662083 C832.030541,686.662083 838.814901,683.170138 840.797138,673.069296 C840.856106,672.7693 840.951363,672.194809 840.951363,672.194809 C841.513828,668.456868 840.946827,665.920407 838.91167,663.619443 Z M843.301017,674.10803 C841.144899,684.052874 834.27133,689.316292 823.363735,689.316292 L819.408334,689.316292 L816.458414,708 L822.873846,708 C823.800704,708 824.588458,707.33101 824.733611,706.423525 L824.809211,706.027531 L826.284927,696.754676 L826.380183,696.243184 C826.523823,695.335698 827.313089,694.666708 828.238435,694.666708 L829.410238,694.666708 C836.989913,694.666708 842.92604,691.611256 844.660308,682.776394 C845.35583,679.23045 845.021677,676.257496 843.301017,674.10803 Z"
+                                    id="Paypal">
+                                </path>
+                            </g>
+                        </g>
+                    </svg>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px"
+                        height="800px" viewBox="0 -150.5 512 512" version="1.1" preserveAspectRatio="xMidYMid">
+                        <g>
+                            <path
+                                d="M93.5520633,27.1031049 C87.5513758,34.2039183 77.9502759,39.8045599 68.349176,39.0044683 C67.1490386,29.4033684 71.849577,19.2021998 77.3502072,12.901478 C83.3508946,5.6006416 93.8520976,0.400045829 102.353071,0 C103.353186,10.0011457 99.4527392,19.8022685 93.5520633,27.1031049 Z M102.25306,40.904686 C88.3514675,40.1045943 76.4501041,48.8055911 69.8493479,48.8055911 C63.1485803,48.8055911 53.0474231,41.3047318 42.0461628,41.5047547 C27.7445244,41.7047776 14.4430006,49.8057057 7.14216427,62.7071836 C-7.8595543,88.5101396 3.24171744,126.714516 17.7433787,147.716922 C24.8441922,158.118114 33.345166,169.51942 44.5464492,169.119374 C55.1476637,168.719328 59.3481449,162.218584 72.1496114,162.218584 C85.0510894,162.218584 88.7515133,169.119374 99.9527965,168.919351 C111.554126,168.719328 118.854962,158.51816 125.955775,148.116968 C134.056703,136.315616 137.357081,124.814299 137.557104,124.21423 C137.357081,124.014207 115.154538,115.513233 114.954515,89.9103 C114.754492,68.5078482 132.45652,58.3066795 133.256612,57.7066108 C123.255466,42.9049151 107.653679,41.3047318 102.25306,40.904686 Z M182.56226,11.9013634 L182.56226,167.819225 L206.765033,167.819225 L206.765033,114.513118 L240.268871,114.513118 C270.872377,114.513118 292.37484,93.5107124 292.37484,63.1072295 C292.37484,32.7037465 271.272423,11.9013634 241.068963,11.9013634 L182.56226,11.9013634 Z M206.765033,32.3037007 L234.668229,32.3037007 C255.670635,32.3037007 267.67201,43.5049839 267.67201,63.2072409 C267.67201,82.909498 255.670635,94.2107926 234.568218,94.2107926 L206.765033,94.2107926 L206.765033,32.3037007 Z M336.579904,169.019363 C351.781646,169.019363 365.883261,161.31848 372.283994,149.117083 L372.784052,149.117083 L372.784052,167.819225 L395.186618,167.819225 L395.186618,90.2103344 C395.186618,67.7077565 377.184556,53.2060952 349.481382,53.2060952 C323.778438,53.2060952 304.776261,67.9077794 304.076181,88.1100938 L325.878678,88.1100938 C327.678884,78.5089939 336.579904,72.2082721 348.781302,72.2082721 C363.582998,72.2082721 371.883949,79.1090626 371.883949,91.8105177 L371.883949,100.411503 L341.680488,102.211709 C313.577269,103.911904 298.375528,115.413222 298.375528,135.415513 C298.375528,155.617827 314.077326,169.019363 336.579904,169.019363 Z M343.080649,150.517243 C330.179171,150.517243 321.978231,144.316533 321.978231,134.815444 C321.978231,125.014321 329.879137,119.313668 344.980867,118.413565 L371.883949,116.713371 L371.883949,125.514379 C371.883949,140.116051 359.482528,150.517243 343.080649,150.517243 Z M425.090044,210.224083 C448.692748,210.224083 459.794019,201.223052 469.495131,173.919924 L512,54.7062671 L487.397182,54.7062671 L458.893916,146.816819 L458.393859,146.816819 L429.890594,54.7062671 L404.587695,54.7062671 L445.592392,168.219271 L443.39214,175.120061 C439.691716,186.821402 433.691029,191.321918 422.989803,191.321918 C421.089585,191.321918 417.389162,191.121895 415.88899,190.921872 L415.88899,209.624014 C417.28915,210.02406 423.289838,210.224083 425.090044,210.224083 Z"
+                                fill="#000000">
+                            </path>
+                        </g>
+                    </svg>
                 </div>
             </div>
         </div>
 
     </div>
 
+    <!-- Footer -->
     <footer>
         <p>&copy; 2026 SHOP - Tous droits réservés</p>
         <p>Contactez-nous : contact@shop.com</p>
     </footer>
 
     <script>
+        // Prix unitaires des produits
         const prices = {
             1: 1699.99,
             2: 129.99,
             3: 89.99
         };
 
+        // Mettre à jour la quantité
         function updateQuantity(itemId, change) {
             const qtyInput = document.getElementById(`qty-${itemId}`);
             let currentQty = parseInt(qtyInput.value);
             let newQty = currentQty + change;
-            
+
             if (newQty >= 1) {
                 qtyInput.value = newQty;
                 updateTotals();
             }
         }
 
+        // Supprimer un article
         function removeItem(itemId) {
             if (confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
                 const cartItem = document.querySelector(`#qty-${itemId}`).closest('.cart-item');
                 cartItem.style.opacity = '0';
                 cartItem.style.transform = 'translateX(-20px)';
-                
+
                 setTimeout(() => {
                     cartItem.remove();
                     updateTotals();
@@ -186,9 +165,10 @@
             }
         }
 
+        // Mettre à jour les totaux
         function updateTotals() {
             let subtotal = 0;
-            
+
             for (let itemId in prices) {
                 const qtyInput = document.getElementById(`qty-${itemId}`);
                 if (qtyInput) {
@@ -196,15 +176,16 @@
                     subtotal += prices[itemId] * qty;
                 }
             }
-            
+
             const tax = subtotal * 0.20;
             const total = subtotal + tax;
-            
+
             document.getElementById('subtotal').textContent = subtotal.toFixed(2) + ' €';
             document.getElementById('tax').textContent = tax.toFixed(2) + ' €';
             document.getElementById('total').textContent = total.toFixed(2) + ' €';
         }
 
+        // Mettre à jour le nombre d'articles dans le badge
         function updateCartCount() {
             let totalItems = 0;
             for (let itemId in prices) {
@@ -213,22 +194,24 @@
                     totalItems += parseInt(qtyInput.value);
                 }
             }
-            
+
             const badge = document.querySelector('.cart-badge');
             if (badge) {
                 badge.textContent = totalItems;
             }
-            
+
             const pageHeader = document.querySelector('.page-header p');
             if (pageHeader) {
                 pageHeader.innerHTML = `Vous avez <strong>${totalItems} article${totalItems > 1 ? 's' : ''}</strong> dans votre panier`;
             }
         }
 
+        // Passer commande
         function checkout() {
             alert('Redirection vers la page de paiement...');
         }
 
+        // Continuer les achats
         function continueShopping() {
             window.location.href = '#computers';
         }
@@ -239,5 +222,6 @@
 
         const panier = new Panier();
     </script>
-    </body>
+</body>
+
 </html>

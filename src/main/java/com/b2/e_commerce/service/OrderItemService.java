@@ -30,6 +30,7 @@ public class OrderItemService {
 
     @Transactional
     public OrderItem addItemToOrder(OrderItemRequestDTO dto) {
+
         CustomerOrder order = orderRepository.findById(dto.getOrderId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Order avec id " + dto.getOrderId() + " introuvable"));
@@ -42,36 +43,35 @@ public class OrderItemService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Produit avec id " + dto.getProductId() + " introuvable"));
 
-        if (product.getStock() < dto.getQuantity()) {
-            throw new IllegalStateException("Stock insuffisant");
-        }
+        int quantityToAdd = dto.getQuantity();
 
         OrderItem item = orderItemRepository
                 .findByOrderIdAndProductId(order.getId(), product.getId())
                 .orElse(null);
 
-        double addedPrice = product.getPrice() * dto.getQuantity();
+        int currentQuantity = (item != null) ? item.getQuantity() : 0;
+        int newQuantity = currentQuantity + quantityToAdd;
 
-        double currentTotal = order.getPriceTotal();
+        if (product.getStock() < quantityToAdd) {
+            throw new IllegalStateException("Stock insuffisant");
+        }
 
-        order.setPriceTotal(currentTotal + addedPrice);
-
-        product.setStock(product.getStock() - dto.getQuantity());
+        product.setStock(product.getStock() - quantityToAdd);
         productRepository.save(product);
 
+        double addedPrice = product.getPrice() * quantityToAdd;
+        order.setPriceTotal(order.getPriceTotal() + addedPrice);
+
         if (item != null) {
-            item.setQuantity(dto.getQuantity());
-            orderItemRepository.save(item);
-            return item;
+            item.setQuantity(newQuantity);
+            return orderItemRepository.save(item);
         } else {
             OrderItem newItem = new OrderItem();
             newItem.setOrder(order);
             newItem.setProduct(product);
-            newItem.setQuantity(dto.getQuantity());
+            newItem.setQuantity(quantityToAdd);
             newItem.setUnitPrice(product.getPrice());
-
-            orderItemRepository.save(newItem);
-            return newItem;
+            return orderItemRepository.save(newItem);
         }
     }
 

@@ -174,7 +174,7 @@
             align-items: center;
             justify-content: center;
             font-size: 70px;
-            color: var(--primary);
+            color: #667eea;
         }
 
         .item-details {
@@ -511,3 +511,10 @@
             color: #666;
             font-weight: 600;
         }
+        
+        .payment-icons svg {
+		    width: 32px;
+		    height: 32px;
+		    margin-right: 8px;
+		    vertical-align: middle;
+		}
