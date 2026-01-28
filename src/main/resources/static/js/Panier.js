@@ -1,10 +1,27 @@
+
 export default class Panier {
     constructor() {
         this.orderId = JSON.parse(localStorage.getItem("orderId"));
+        this.panier = [];
+        this.init();
+    }
 
-        this.panier = JSON.parse(localStorage.getItem("panier")) || [];
-
-        localStorage.setItem("panier", JSON.stringify(this.panier));
+    async init() {
+        if (this.orderId) {
+            try {
+                const response = await fetch(`/api/order-items?orderId=${this.orderId}`);
+                if (response.ok) {
+                    this.panier = await response.json();
+					console.log(this.panier)
+                } else {
+                    this.panier = [];
+                }
+            } catch (e) {
+                this.panier = [];
+            }
+        } else {
+            this.panier = [];
+        }
         this.run();
     }
 
@@ -15,27 +32,41 @@ export default class Panier {
 
     render() {
         const container = document.querySelector(".cart-items");
-        container.innerHTML = "";
+        container.innerHTML = `		
+		<div class="trust-badges">
+            <div class="trust-badge">
+                <div class="trust-badge-icon">🚚</div>
+                <div class="trust-badge-text">Livraison gratuite</div>
+            </div>
+            <div class="trust-badge">
+                <div class="trust-badge-icon">🛡️</div>
+                <div class="trust-badge-text">Paiement sécurisé</div>
+            </div>
+            <div class="trust-badge">
+                <div class="trust-badge-icon">↩️</div>
+                <div class="trust-badge-text">Retour sous 30 jours</div>
+            </div>
+        </div>`;
 
         this.panier.forEach(item => {
+            const product = item.product;
             container.innerHTML += `
                 <div class="cart-item">
-                    <div class="item-image"><img src="${item.path_image}" alt="Produit"></div>
+                    <div class="item-image"><img src="${product.pathImage}" alt="Produit"></div>
                     <div class="item-details">
-                        <div class="item-category">${item.category}</div>
-                        <div class="item-name">${item.name}</div>
-                        <div class="item-specs">Specs ici</div>
+                        <div class="item-category">${product.category ? product.category.name : ''}</div>
+                        <div class="item-name">${product.name}</div>
+                        <div class="item-specs">${product.description || 'Specs ici'}</div>
                         <div class="item-stock">✓ En stock</div>
                     </div>
-
                     <div class="item-actions">
-                        <div class="item-price">${item.price.toFixed(2).replace(".", ",")} €</div>
+                        <div class="item-price">${item.unitPrice.toFixed(2).replace('.', ',')} €</div>
                         <div class="quantity-control">
-                            <button class="qty-btn" data-action="reduce" data-id="${item.productId}">-</button>
-                            <input type="number" class="qty-input" id="qty-${item.productId}" value="${item.quantity}" min="1" readonly>
-                            <button class="qty-btn" data-action="add" data-id="${item.productId}">+</button>
+                            <button class="qty-btn" data-action="reduce" data-id="${product.id}">-</button>
+                            <input type="number" class="qty-input" id="qty-${product.id}" value="${item.quantity}" min="1" readonly>
+                            <button class="qty-btn" data-action="add" data-id="${product.id}">+</button>
                         </div>
-                        <button class="remove-btn" data-id="${item.productId}">🗑️ Supprimer</button>
+                        <button class="remove-btn" data-action="delete" data-id="${item.id}">🗑️ Supprimer</button>
                     </div>
                 </div>
             `;
@@ -65,23 +96,18 @@ export default class Panier {
 
     async onChangeQuantity(e) {
         const button = e.currentTarget;
-		console.log(button)
-        const productId = parseInt(button.dataset.id);
-        const action = button.dataset.action;	
-		console.log(productId)
-        const item = this.panier.find(p => p.productId === productId);
-		console.log("eee", item)
-        if (!item) return;
 
+        const productId = parseInt(button.dataset.id);
+        const action = button.dataset.action;
+        const item = this.panier.find(p => p.product && p.product.id === productId);
+        if (!item) return;
         if (action === "reduce" && item.quantity > 1) {
             item.quantity -= 1;
         } else if (action === "add") {
             item.quantity += 1;
         }
-
-        await this.modifyItem(productId, item.quantity);
-        this.saveLocal();
-        this.render();
+        await this.modifyItem(item.id, item.quantity);
+        this.run();
     }
 
     async modifyItem(productId, quantity) {
@@ -91,28 +117,23 @@ export default class Panier {
                 "Content-Type": "application/json"
             }
         });
-
         if (!response.ok) {
             console.error("Erreur update quantity", await response.text());
             return;
         }
-
-        console.log("Quantité mise à jour en DB");
+        // Recharger le panier après modification
+        await this.init();
     }
 
     async onDeleteItem(e) {
         const button = e.currentTarget;
-        const productId = parseInt(button.dataset.productId);
-
-        await this.deleteItem(productId);
-
-        this.panier = this.panier.filter(p => p.productId !== productId);
-        this.saveLocal();
-        this.render();
+        const orderItemId = parseInt(button.dataset.id);
+        await this.deleteItem(orderItemId);
+        await this.init();
     }
 
-    async deleteItem(productId) {
-        const response = await fetch(`/api/admin/order-items/${productId}`, {
+    async deleteItem(orderItemId) {
+        const response = await fetch(`/api/admin/order-items/${orderItemId}`, {
             method: "DELETE"
         });
 
@@ -120,8 +141,6 @@ export default class Panier {
             console.error("Erreur delete", await response.text());
             return;
         }
-
-        console.log("Item supprimé en DB");
     }
 
     saveLocal() {
@@ -132,10 +151,10 @@ export default class Panier {
 	    let totalItems = 0;
 	    let subtotal = 0;
  
-	    this.panier.forEach(item => {
-	        totalItems += item.quantity;
-	        subtotal += item.price * item.quantity;
-	    });
+        this.panier.forEach(item => {
+            totalItems += item.quantity;
+            subtotal += item.unitPrice * item.quantity;
+        });
 
 	    const tax = subtotal * 0.20;
 	    const total = subtotal + tax;
