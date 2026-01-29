@@ -1,4 +1,4 @@
-package com.b2.e_commerce.controller;
+package com.b2.e_commerce.controller.MVC;
 
 import com.b2.e_commerce.entity.User;
 import com.b2.e_commerce.repository.UserRepository;

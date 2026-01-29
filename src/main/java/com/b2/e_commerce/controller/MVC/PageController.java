@@ -1,4 +1,4 @@
-package com.b2.e_commerce.controller;
+package com.b2.e_commerce.controller.MVC;
 
 import com.b2.e_commerce.dto.ProductResponseDTO;
 import com.b2.e_commerce.service.AuthService;

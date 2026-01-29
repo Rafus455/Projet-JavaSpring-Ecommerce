@@ -101,23 +101,26 @@ export default class Panier {
         const action = button.dataset.action;
         const item = this.panier.find(p => p.product && p.product.id === productId);
         if (!item) return;
+
+        await this.modifyItem(item.id, item.quantity);
+
         if (action === "reduce" && item.quantity > 1) {
             item.quantity -= 1;
         } else if (action === "add") {
             item.quantity += 1;
         }
-        await this.modifyItem(item.id, item.quantity);
         this.run();
     }
 
     async modifyItem(productId, quantity) {
-        const response = await fetch(`/api/admin/order-items/${productId}?quantity=${quantity}`, {
+        const response = await fetch(`/api/order-items/${productId}?quantity=${quantity}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             }
         });
         if (!response.ok) {
+			alert("Stock insufissant");
             console.error("Erreur update quantity", await response.text());
             return;
         }
@@ -132,7 +135,7 @@ export default class Panier {
     }
 
     async deleteItem(orderItemId) {
-        const response = await fetch(`/api/admin/order-items/${orderItemId}`, {
+        const response = await fetch(`/api/order-items/${orderItemId}`, {
             method: "DELETE"
         });
 

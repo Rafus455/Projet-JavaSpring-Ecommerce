@@ -98,6 +98,7 @@ public class OrderItemService {
         Product product = item.getProduct();
 
         int oldQuantity = item.getQuantity();
+
         int diff = newQuantity - oldQuantity;
 
         if (diff > 0 && product.getStock() < diff) {

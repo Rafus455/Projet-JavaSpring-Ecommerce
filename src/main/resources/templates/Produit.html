@@ -86,7 +86,7 @@
 				    th:data-price="${product.price}"
 				    th:data-orderItemId=${orderItemId}
 				    th:data-pathimage=${product.pathImage}
-				    onclick="addToCart(this, document.getElementById('quantity').value); redirectToCheckout();"
+				    onclick="addToCart(this, parseInt(document.getElementById('quantity').value)); redirectToCheckout();"
 			        th:disabled="${product.stock == 0}"
 			        th:style="${product.stock == 0} ? 'opacity: 0.5; cursor: not-allowed;' : ''"
                 > Acheter maintenant</button>
@@ -139,8 +139,8 @@
 
         async function handleBuyNow(btn) {
         	try {
-                await addToCart(btn, document.getElementById('quantity').value);
-                //window.location.reload();
+                await addToCart(btn, parseInt(document.getElementById('quantity').value));
+                window.location.reload();
             } catch (e) {
                 console.error("Erreur addToCart :", e);
             }
