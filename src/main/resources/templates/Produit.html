@@ -4,12 +4,9 @@
     <meta charset="UTF-8">
     <title>Détail Produit</title>
     <link rel="stylesheet" th:href="@{/css/produit.css}">
-    <style>
-        /* Ajout de sécurité pour le badge rouge */
-        .product-badge.out {
-            background-color: #e74c3c !important;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </head>
 <body>
 
@@ -43,7 +40,7 @@
 
             <div class="product-price-section">
                 <div class="product-price">
-                	<span th:text="${product.price}">0.00 €</span>
+                	<span th:text="${product.price} + ' €'">0.00 €</span>
                 </div>
             </div>
 
@@ -70,12 +67,30 @@
 			</div>
 
             <div class="action-buttons">
-                <button class="add-to-cart-btn" 
-				        th:disabled="${product.stock == 0}"
-				        th:style="${product.stock == 0} ? 'opacity: 0.5; cursor: not-allowed;' : ''">
-				    🛒 Ajouter au panier
-				</button>
-                <button class="buy-now-btn">Acheter maintenant</button>
+
+                <button class="add-to-cart-btn"
+				    th:data-id="${product.id}"
+				    th:data-name="${product.name}"
+				    th:data-category="${product.categoryName}"
+				    th:data-price="${product.price}"
+				    th:data-orderItemId=${orderItemId}
+				    th:data-pathimage=${product.pathImage}
+				    onclick="handleBuyNow(this)"
+			        th:disabled="${product.stock == 0}"
+			        th:style="${product.stock == 0} ? 'opacity: 0.5; cursor: not-allowed;' : ''"
+		        > 🛒 Ajouter au panier </button>
+
+                <button class="buy-now-btn"
+				    th:data-id="${product.id}"
+				    th:data-name="${product.name}"
+				    th:data-category="${product.categoryName}"
+				    th:data-price="${product.price}"
+				    th:data-orderItemId=${orderItemId}
+				    th:data-pathimage=${product.pathImage}
+				    onclick="addToCart(this, document.getElementById('quantity').value); redirectToCheckout();"
+			        th:disabled="${product.stock == 0}"
+			        th:style="${product.stock == 0} ? 'opacity: 0.5; cursor: not-allowed;' : ''"
+                > Acheter maintenant</button>
             </div>
 
             <div class="product-features">
@@ -104,7 +119,9 @@
         <p>Contactez-nous : contact@shop.com</p>
     </footer>
 
+	<script th:src="@{/js/categorie.js}"></script>
     <script>
+    
         function incrementQuantity() {
             const input = document.getElementById('quantity');
             input.value = parseInt(input.value) + 1;
@@ -116,21 +133,18 @@
                 input.value = parseInt(input.value) - 1;
             }
         }
+        
+        function redirectToCheckout() {
+            window.location.href = "/panier";
+        }
 
-        function openTab(evt, tabName) {
-            const tabPanels = document.getElementsByClassName('tab-panel');
-            for (let i = 0; i < tabPanels.length; i++) {
-                tabPanels[i].classList.remove('active');
+        async function handleBuyNow(btn) {
+        	try {
+                await addToCart(btn);
+                //window.location.reload();
+            } catch (e) {
+                console.error("Erreur addToCart :", e);
             }
-            
-            const tabs = document.getElementsByClassName('tab');
-            for (let i = 0; i < tabs.length; i++) {
-                tabs[i].classList.remove('active');
-            }
-            
-            // J'ai corrigé "currentTarxget" en "currentTarget" ci-dessous
-            document.getElementById(tabName).classList.add('active');
-            evt.currentTarget.classList.add('active');
         }
     </script>
 </body>

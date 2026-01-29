@@ -121,7 +121,6 @@ export default class Panier {
             console.error("Erreur update quantity", await response.text());
             return;
         }
-        // Recharger le panier après modification
         await this.init();
     }
 

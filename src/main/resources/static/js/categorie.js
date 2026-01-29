@@ -1,15 +1,15 @@
-async function addToCart(element) {
-
+async function addToCart(element, quantity) {
+	console.log(quantity);
     const product = {
 		orderItemId: element.dataset.orderItemId,
         productId: element.dataset.id,
         name: element.dataset.name,
         category: element.dataset.category,
         price: parseFloat(element.dataset.price),
-        quantity: 1,
+        quantity: quantity ? quantity : 1,
 		path_image: element.dataset.pathimage
     };
-	console.log("ejehj", element.dataset.pathImage)
+
     let orderId = localStorage.getItem("orderId");
     let panier = JSON.parse(localStorage.getItem("panier")) || [];
 
@@ -33,7 +33,7 @@ async function addToCart(element) {
         const existingItem = panier.find(p => p.productId == product.productId);
 
         if (existingItem) {
-            existingItem.quantity += 1;
+            existingItem.quantity += product.quantity;
 
             const updateItem = await fetch(`/api/order-items/${existingItem.orderItemId}?quantity=${existingItem.quantity}`, {
                 method: "PUT",
