@@ -181,7 +181,6 @@
 		    height: 100%;
 		    object-fit: cover;
 		}
-        }
 
         .item-details {
             display: flex;
@@ -492,7 +491,6 @@
             margin: 10px 0;
         }
 
-        /* Trust Badges */
         .trust-badges {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -503,7 +501,7 @@
         .trust-badge {
             text-align: center;
             padding: 15px;
-            background-color: #f8f9ff;
+            background-color: #ffffff;
             border-radius: 10px;
         }
 

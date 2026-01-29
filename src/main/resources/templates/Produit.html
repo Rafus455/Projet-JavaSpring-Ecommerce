@@ -16,7 +16,8 @@
 	<div th:replace="header :: header"></div>
 	
 	<div class="breadcrumb">
-        <a th:href="@{/}">Accueil</a> / <a th:href="@{/categorie/ordinateur}">Ordinateurs</a> / <div th:text="${product.name}"></div>
+        <a th:href="@{/}">Accueil</a> /  <a th:href="@{/categorie/{id}(id=${product.categoryName})}" th:text="${product.categoryName}"></a>
+ / <div th:text="${product.name}"></div>
     </div>
 
     <div class="product-container">
@@ -61,7 +62,6 @@
             
            <div class="stock-section">
 			    <span class="stock-label">Stock disponible :</span>
-                <!-- Gestion de la couleur du stock (Vert ou Rouge) -->
 			     <span class="stock-value" 
 			          th:text="${product.stock}"
 			          th:classappend="${product.stock == 0} ? 'out' : ''">
@@ -98,12 +98,6 @@
             </div>
         </div>
     </div>
-	
-    <section class="tabs-section">
-        <div class="tabs">
-            <button class="tab active" onclick="openTab(event, 'description')">Description</button>
-        </div>
-      </section>
 
     <footer>
         <p>&copy; 2026 SHOP - Tous droits réservés</p>

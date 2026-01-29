@@ -9,6 +9,9 @@ import com.b2.e_commerce.exception.ResourceNotFoundException;
 import com.b2.e_commerce.repository.OrderRepository;
 import com.b2.e_commerce.repository.OrderItemRepository;
 import com.b2.e_commerce.repository.ProductRepository;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +29,10 @@ public class OrderItemService {
         this.orderItemRepository = orderItemRepository;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
+    }
+
+    public List<OrderItem> getItemsByOrderId(Long orderId) {
+        return orderItemRepository.findAllByOrderId(orderId);
     }
 
     @Transactional
@@ -74,7 +81,8 @@ public class OrderItemService {
             return orderItemRepository.save(newItem);
         }
     }
-
+    
+   
     @Transactional
     public void updateItemQuantity(Long itemId, int newQuantity) {
     	System.out.println("début");
