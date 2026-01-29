@@ -1,45 +1,93 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Détail Produit</title>
     <link rel="stylesheet" th:href="@{/css/produit.css}">
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <style>
+        .product-badge.sale {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .price-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .new-price {
+            color: #ff4757;
+            font-weight: bold;
+            font-size: 44px;
+        }
+    </style>
 </head>
+
 <body>
 
-	<div th:replace="header :: header"></div>
-	
-	<div class="breadcrumb">
-        <a th:href="@{/}">Accueil</a> /  <a th:href="@{/categorie/{id}(id=${product.categoryName})}" th:text="${product.categoryName}"></a>
-    <div th:text="${product.name}"></div>
+    <div th:replace="~{header :: header}"></div>
+
+    <div class="breadcrumb">
+        <a th:href="@{/}">Accueil</a> /
+        <a th:href="@{/categorie/id/{id}(id=${product.categoryId})}" th:text="${product.categoryName}"></a> /
+        <div th:text="${product.name}"></div>
     </div>
 
     <div class="product-container">
-        <div class="product-images">
-            <div class="main-image-container">
-                <div class="main-image">
-                    <img th:src="@{${product.pathImage}}" alt="Produit"> 
-					    <span class="product-badge out"
-					          th:if="${product.stock == 0}">
-					        Rupture
-					    </span>
-						<span class="product-badge new"
-					          th:if="${product.stock > 0 and product.new}">
-					        Nouveau
-					    </span>                    
-                </div>
-            </div>
+        <div class="product-image"
+            style="position: relative; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%); border-radius: 15px; overflow: hidden;">
+            <img th:src="@{${product.pathImage}}" alt="Produit" style="max-width: 100%; max-height: 500px;">
+
+            <span class="product-badge out" th:if="${product.stock == 0}"
+                style="background-color: #e74c3c; position: absolute; top: 20px; right: 20px;">
+                Rupture
+            </span>
+
+            <span class="product-badge sale" th:if="${product.stock > 0 and product.onSale > 0}"
+                th:text="'-' + ${product.onSale} + '%'" style="position: absolute; top: 20px; left: 20px;">
+            </span>
+
+            <span class="product-badge new" th:if="${product.stock > 0 and product.new and product.onSale == 0}"
+                style="background-color: #2ecc71; position: absolute; top: 20px; right: 20px;">
+                Nouveau
+            </span>
         </div>
 
         <div class="product-info">
-            <div class="product-category" th:text="${product.name}">x</div>            
-            
+            <div class="product-category" th:text="${product.name}">Nom</div>
+
             <div class="product-price-section">
                 <div class="product-price">
-                	<span th:text="${product.price} + ' €'">0.00 €</span>
+
+                    <span th:if="${product.onSale == 0}" th:text="${product.price} + ' €'">
+                    </span>
+
+                    <div th:if="${product.onSale > 0}" class="price-container">
+                        <span class="old-price" th:text="${product.price} + ' €'">
+                        </span>
+                        <span class="new-price"
+                            th:text="${#numbers.formatDecimal(product.price - (product.price * product.onSale / 100.0), 1, 2)} + ' €'">
+                        </span>
+                    </div>
+
                 </div>
             </div>
 
@@ -55,41 +103,35 @@
                     <button class="quantity-btn" onclick="incrementQuantity()">+</button>
                 </div>
             </div>
-            
-           <div class="stock-section">
-			    <span class="stock-label">Stock disponible :</span>
-			     <span class="stock-value" 
-			          th:text="${product.stock}"
-			          th:classappend="${product.stock == 0} ? 'out' : ''">
-			        0
-			    </span>
-			</div>
+
+            <div class="stock-section">
+                <span class="stock-label">Stock disponible :</span>
+                <span class="stock-value" th:text="${product.stock}"
+                    th:classappend="${product.stock == 0} ? 'out' : ''">
+                    0
+                </span>
+            </div>
 
             <div class="action-buttons">
 
-                <button class="add-to-cart-btn"
-				    th:data-id="${product.id}"
-				    th:data-name="${product.name}"
-				    th:data-category="${product.categoryName}"
-				    th:data-price="${product.price}"
-				    th:data-orderItemId=${orderItemId}
-				    th:data-pathimage=${product.pathImage}
-				    onclick="handleBuyNow(this)"
-			        th:disabled="${product.stock == 0}"
-			        th:style="${product.stock == 0} ? 'opacity: 0.5; cursor: not-allowed;' : ''"
-		        > 🛒 Ajouter au panier </button>
+                <!-- BOUTON AJOUTER AU PANIER -->
+                <button class="add-to-cart-btn" th:data-id="${product.id}" th:data-name="${product.name}"
+                    th:data-category="${product.categoryName}"
+                    th:data-price="${product.onSale > 0 ? (product.price - (product.price * product.onSale / 100.0)) : product.price}"
+                    th:data-orderItemId=${orderItemId} th:data-pathimage=${product.pathImage}
+                    onclick="handleBuyNow(this)" th:disabled="${product.stock == 0}"
+                    th:style="${product.stock == 0} ? 'opacity: 0.5; cursor: not-allowed;' : ''"> 🛒 Ajouter au panier
+                </button>
 
-                <button class="buy-now-btn"
-				    th:data-id="${product.id}"
-				    th:data-name="${product.name}"
-				    th:data-category="${product.categoryName}"
-				    th:data-price="${product.price}"
-				    th:data-orderItemId=${orderItemId}
-				    th:data-pathimage=${product.pathImage}
-				    onclick="addToCart(this, parseInt(document.getElementById('quantity').value)); redirectToCheckout();"
-			        th:disabled="${product.stock == 0}"
-			        th:style="${product.stock == 0} ? 'opacity: 0.5; cursor: not-allowed;' : ''"
-                > Acheter maintenant</button>
+                <!-- BOUTON ACHETER MAINTENANT -->
+                <button class="buy-now-btn" th:data-id="${product.id}" th:data-name="${product.name}"
+                    th:data-category="${product.categoryName}"
+                    th:data-price="${product.onSale > 0 ? (product.price - (product.price * product.onSale / 100.0)) : product.price}"
+                    th:data-orderItemId=${orderItemId} th:data-pathimage=${product.pathImage}
+                    onclick="addToCart(this, parseInt(document.getElementById('quantity').value)); redirectToCheckout();"
+                    th:disabled="${product.stock == 0}"
+                    th:style="${product.stock == 0} ? 'opacity: 0.5; cursor: not-allowed;' : ''"> Acheter
+                    maintenant</button>
             </div>
 
             <div class="product-features">
@@ -118,9 +160,9 @@
         <p>Contactez-nous : contact@shop.com</p>
     </footer>
 
-	<script th:src="@{/js/categorie.js}"></script>
+    <script th:src="@{/js/categorie.js}"></script>
     <script>
-    
+
         function incrementQuantity() {
             const input = document.getElementById('quantity');
             input.value = parseInt(input.value) + 1;
@@ -132,13 +174,13 @@
                 input.value = parseInt(input.value) - 1;
             }
         }
-        
+
         function redirectToCheckout() {
             window.location.href = "/panier";
         }
 
         async function handleBuyNow(btn) {
-        	try {
+            try {
                 await addToCart(btn, parseInt(document.getElementById('quantity').value));
                 window.location.reload();
             } catch (e) {
@@ -147,4 +189,5 @@
         }
     </script>
 </body>
+
 </html>
