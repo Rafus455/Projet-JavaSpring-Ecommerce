@@ -24,19 +24,22 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final com.b2.e_commerce.repository.OrderItemRepository orderItemRepository;
 
     private static final String UPLOAD_DIR = "uploads/products/";
 
     public ProductService(
             ProductRepository productRepository,
-            CategoryRepository categoryRepository) {
+            CategoryRepository categoryRepository,
+            com.b2.e_commerce.repository.OrderItemRepository orderItemRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     // READ
     public List<ProductResponseDTO> findAll() {
-        return productRepository.findAll()
+        return productRepository.findByActiveTrue()
                 .stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
@@ -109,6 +112,12 @@ public class ProductService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Produit avec id " + id + " introuvable"));
 
+        if (orderItemRepository.existsByProduct(product)) {
+            product.setActive(false);
+            productRepository.save(product);
+            return;
+        }
+
         deleteImageIfExists(product.getPathImage());
         productRepository.delete(product);
     }
@@ -153,6 +162,7 @@ public class ProductService {
         dto.setStock(product.getStock());
         dto.setOnSale(product.getOnSale());
         dto.setPathImage(product.getPathImage());
+        dto.setActive(Boolean.TRUE.equals(product.isActive()));
         dto.setCategoryName(product.getCategory().getName());
         dto.setCategoryId(product.getCategory().getId());
         return dto;

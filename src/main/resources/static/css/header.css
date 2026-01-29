@@ -3,9 +3,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
-        
- 
+
 /* Header */
         header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
@@ -21,12 +19,10 @@
             margin: 0 auto;
         }
 
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .logo img {
+            max-width: 20%;
+            height: auto;
+            display: block;
         }
 
         .main-nav {
