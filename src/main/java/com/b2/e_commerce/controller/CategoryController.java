@@ -55,6 +55,7 @@ public class CategoryController {
                                 @RequestParam(required = false) Double max,
                                 @RequestParam(required = false) Boolean nouveau,
                                 @RequestParam(required = false) Boolean rupture,
+                                @RequestParam(required = false) String sort,
                                 Model model) {
 
         Category category = categoryRepo.findById(id).orElse(null);
@@ -64,25 +65,33 @@ public class CategoryController {
 
         double minPrice = (min != null) ? min : 0;
         double maxPrice = (max != null) ? max : 1000000;
+        
         List<Product> products = productRepo.findByCategoryAndPriceBetween(category, minPrice, maxPrice);
+        
+        var stream = products.stream();
 
         if (Boolean.TRUE.equals(rupture)) {
-            products = products.stream()
-                    .filter(p -> p.getStock() == 0)
-                    .collect(Collectors.toList());
+            stream = stream.filter(p -> p.getStock() == 0);
         }
 
         if (Boolean.TRUE.equals(nouveau)) {
-            products = products.stream()
-                    .filter(Product::isNew)
-                    .collect(Collectors.toList());
+            stream = stream.filter(Product::isNew);
         }
+
+        if ("asc".equals(sort)) {
+            stream = stream.sorted((p1, p2) -> Double.compare(p1.getPrice(), p2.getPrice()));
+        } else if ("desc".equals(sort)) {
+            stream = stream.sorted((p1, p2) -> Double.compare(p2.getPrice(), p1.getPrice()));
+        }
+
+        products = stream.collect(Collectors.toList());
 
         model.addAttribute("category", category);
         model.addAttribute("products", products);
-
+        
         model.addAttribute("minPrice", minPrice);
         model.addAttribute("maxPrice", maxPrice);
+        model.addAttribute("sort", sort); 
 
         return "categorie";
     }

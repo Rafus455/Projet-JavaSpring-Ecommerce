@@ -104,6 +104,7 @@ public class ProductResponseDTO {
             return false;
         }
        return this.createdAt.isAfter(LocalDateTime.now().minusDays(1));
+    }
 
     public boolean isActive() {
         return active;

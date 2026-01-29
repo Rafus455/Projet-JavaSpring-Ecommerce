@@ -85,7 +85,6 @@
 
     <div class="products-section">
 
-        <!-- TOOLBAR -->
         <div class="toolbar">
             <div class="results-count">
                 <strong th:text="${#lists.size(products)} + ' produits'">
@@ -94,12 +93,23 @@
             </div>
 
             <div class="sort-options">
-                <label>Trier par :</label>	
-                <select>
-                    <option>Prix croissant</option>
-                    <option>Prix décroissant</option>
-                </select>
-            </div>
+			    <label>Trier par :</label>  
+			    <select onchange="if (this.value) window.location.href=this.value">
+			        
+			        <option value="">Pertinence</option>
+			        
+			        <option th:value="@{/categorie/id/{id}(id=${category.id}, sort='asc', min=${param.min}, max=${param.max}, nouveau=${param.nouveau}, rupture=${param.rupture})}"
+			                th:selected="${param.sort != null and param.sort[0] == 'asc'}">
+			            Prix croissant
+			        </option>
+			        
+			        <option th:value="@{/categorie/id/{id}(id=${category.id}, sort='desc', min=${param.min}, max=${param.max}, nouveau=${param.nouveau}, rupture=${param.rupture})}"
+			                th:selected="${param.sort != null and param.sort[0] == 'desc'}">
+			            Prix décroissant
+			        </option>
+			        
+			    </select>
+			</div>
         </div>
 
         <div class="products-grid">
