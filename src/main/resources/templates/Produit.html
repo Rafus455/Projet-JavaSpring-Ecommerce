@@ -14,30 +14,29 @@
 	
 	<div class="breadcrumb">
         <a th:href="@{/}">Accueil</a> /  <a th:href="@{/categorie/{id}(id=${product.categoryName})}" th:text="${product.categoryName}"></a>
- / <div th:text="${product.name}"></div>
+    <div th:text="${product.name}"></div>
     </div>
 
     <div class="product-container">
         <div class="product-images">
             <div class="main-image-container">
                 <div class="main-image">
-                    <img th:src="@{${product.pathImage}}" alt="Produit">
-                    
-                    <span class="product-badge out" th:if="${product.stock == 0}">Rupture</span>
-                    <span class="product-badge new" th:if="${product.stock > 0}">Nouveau</span>
-                    
+                    <img th:src="@{${product.pathImage}}" alt="Produit"> 
+					    <span class="product-badge out"
+					          th:if="${product.stock == 0}">
+					        Rupture
+					    </span>
+						<span class="product-badge new"
+					          th:if="${product.stock > 0 and product.new}">
+					        Nouveau
+					    </span>                    
                 </div>
             </div>
         </div>
 
         <div class="product-info">
-            <div class="product-category">Gaming</div>
             <div class="product-category" th:text="${product.name}">x</div>            
             
-            <div class="product-rating">
-                <span class="stars">★★★★★</span>
-            </div>
-
             <div class="product-price-section">
                 <div class="product-price">
                 	<span th:text="${product.price} + ' €'">0.00 €</span>
@@ -140,7 +139,7 @@
 
         async function handleBuyNow(btn) {
         	try {
-                await addToCart(btn);
+                await addToCart(btn, document.getElementById('quantity').value);
                 //window.location.reload();
             } catch (e) {
                 console.error("Erreur addToCart :", e);

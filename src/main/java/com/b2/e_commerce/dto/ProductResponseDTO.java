@@ -1,5 +1,7 @@
 package com.b2.e_commerce.dto;
 
+import java.time.LocalDateTime;
+
 public class ProductResponseDTO {
 
     private Long id;
@@ -11,6 +13,7 @@ public class ProductResponseDTO {
     private String pathImage;
     private String categoryName;
     private Long categoryId;
+    private LocalDateTime createdAt;
     private boolean active;
 
     public ProductResponseDTO() {}
@@ -58,6 +61,10 @@ public class ProductResponseDTO {
     public int getOnSale() {
         return onSale;
     }
+    
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
     public void setOnSale(int onSale) {
         this.onSale = onSale;
@@ -86,6 +93,17 @@ public class ProductResponseDTO {
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
+    
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+    
+    public boolean isNew() {
+        if (this.createdAt == null) {
+            return false;
+        }
+       return this.createdAt.isAfter(LocalDateTime.now().minusDays(1));
 
     public boolean isActive() {
         return active;

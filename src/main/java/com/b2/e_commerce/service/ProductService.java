@@ -165,6 +165,8 @@ public class ProductService {
         dto.setActive(Boolean.TRUE.equals(product.isActive()));
         dto.setCategoryName(product.getCategory().getName());
         dto.setCategoryId(product.getCategory().getId());
+        dto.setCreatedAt(product.getCreatedAt()); 
+        
         return dto;
     }
 }
