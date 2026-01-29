@@ -62,13 +62,13 @@ public class DataInitializer {
                 r.setRole("ADMIN");
                 return roleRepo.save(r);
             });
-            
+
             // USER DE TEST
             if (userRepo.findByMail("a@gmail.com").isEmpty()) {
                 User user = new User();
                 user.setName("Admin");
                 user.setFirstname("Admin");
-                user.setMail("a@gmail.com");
+                user.setMail("");
                 user.setPassword(encoder.encode("a@gmail.com"));
                 user.setRole(adminRole);
                 userRepo.save(user);
