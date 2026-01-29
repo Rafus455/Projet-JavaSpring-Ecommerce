@@ -155,6 +155,8 @@ public class ProductService {
         dto.setPathImage(product.getPathImage());
         dto.setCategoryName(product.getCategory().getName());
         dto.setCategoryId(product.getCategory().getId());
+        dto.setCreatedAt(product.getCreatedAt()); 
+        
         return dto;
     }
 }

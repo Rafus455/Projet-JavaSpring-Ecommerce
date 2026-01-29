@@ -24,23 +24,22 @@
         <div class="product-images">
             <div class="main-image-container">
                 <div class="main-image">
-                    <img th:src="@{${product.pathImage}}" alt="Produit">
-                    
-                    <span class="product-badge out" th:if="${product.stock == 0}">Rupture</span>
-                    <span class="product-badge new" th:if="${product.stock > 0}">Nouveau</span>
-                    
+                    <img th:src="@{${product.pathImage}}" alt="Produit"> 
+					    <span class="product-badge out"
+					          th:if="${product.stock == 0}">
+					        Rupture
+					    </span>
+						<span class="product-badge new"
+					          th:if="${product.stock > 0 and product.new}">
+					        Nouveau
+					    </span>                    
                 </div>
             </div>
         </div>
 
         <div class="product-info">
-            <div class="product-category">Gaming</div>
             <div class="product-category" th:text="${product.name}">x</div>            
             
-            <div class="product-rating">
-                <span class="stars">★★★★★</span>
-            </div>
-
             <div class="product-price-section">
                 <div class="product-price">
                 	<span th:text="${product.price}">0.00 €</span>
@@ -75,7 +74,11 @@
 				        th:style="${product.stock == 0} ? 'opacity: 0.5; cursor: not-allowed;' : ''">
 				    🛒 Ajouter au panier
 				</button>
-                <button class="buy-now-btn">Acheter maintenant</button>
+                <button class="add-to-cart-btn" 
+				        th:disabled="${product.stock == 0}"
+				        th:style="${product.stock == 0} ? 'opacity: 0.5; cursor: not-allowed;' : ''">
+				    Acheter maintenant
+				</button>
             </div>
 
             <div class="product-features">
