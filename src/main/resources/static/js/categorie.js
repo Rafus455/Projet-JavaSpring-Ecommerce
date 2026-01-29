@@ -85,6 +85,7 @@ async function addToCart(element, quantity) {
 		
         localStorage.setItem("panier", JSON.stringify(panier));
 
+		return "good";
     } catch (error) {
         console.error(error);
         alert("Erreur lors de l'ajout au panier");

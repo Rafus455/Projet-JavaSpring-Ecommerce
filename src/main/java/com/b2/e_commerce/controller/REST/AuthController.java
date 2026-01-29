@@ -1,4 +1,4 @@
-package com.b2.e_commerce.controller;
+package com.b2.e_commerce.controller.REST;
 
 import com.b2.e_commerce.dto.LoginRequest;
 import com.b2.e_commerce.dto.RegisterRequest;
