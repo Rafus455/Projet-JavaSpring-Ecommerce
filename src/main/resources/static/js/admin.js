@@ -102,7 +102,14 @@ async function saveCategory() {
 
 async function deleteCategory(id) {
     if (!confirm("Supprimer cette catégorie ?")) return;
-    await apiFetch(`/api/admin/category/${id}`, { method: "DELETE" });
+    const res = await apiFetch(`/api/admin/category/${id}`, { method: "DELETE" });
+    if (!res.ok) {
+        let body;
+        try { body = await res.json(); } catch (e) { body = await res.text(); }
+        const msg = body && body.message ? body.message : (typeof body === 'string' ? body : JSON.stringify(body));
+        alert('Erreur suppression catégorie\n' + msg);
+        return;
+    }
     loadCategories();
 }
 
@@ -216,7 +223,14 @@ async function saveProduct() {
 
 async function deleteProduct(id) {
     if (!confirm("Supprimer ce produit ?")) return;
-    await apiFetch(`/api/admin/product/${id}`, { method: "DELETE" });
+    const res = await apiFetch(`/api/admin/product/${id}`, { method: "DELETE" });
+    if (!res.ok) {
+        let body;
+        try { body = await res.json(); } catch (e) { body = await res.text(); }
+        const msg = body && body.message ? body.message : (typeof body === 'string' ? body : JSON.stringify(body));
+        alert('Erreur suppression produit\n' + msg);
+        return;
+    }
     loadProducts();
 }
 

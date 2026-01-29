@@ -25,6 +25,7 @@ public class Product {
 
     private int onSale;
     private String pathImage;
+    private Boolean active = Boolean.TRUE;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -67,6 +68,10 @@ public class Product {
         return pathImage;
     }
 
+    public Boolean isActive() {
+        return active;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -107,6 +112,10 @@ public class Product {
 
     public void setPathImage(String pathImage) {
         this.pathImage = pathImage;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {

@@ -5,6 +5,7 @@ public class CategoryResponseDTO {
 	private String name;
     private String description;
     private String type;
+    private boolean active;
 
     public CategoryResponseDTO() {}
 
@@ -38,5 +39,13 @@ public class CategoryResponseDTO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

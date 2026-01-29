@@ -74,6 +74,15 @@ async function addToCart(element) {
             panier.push(product);
         }
 
+		Toastify({
+		    text: `${element.dataset.name} vient d'être ajouter au panier`,
+		    duration: 2_000,
+		    gravity: "top",
+		    position: "right",
+		    backgroundColor: "#4CAF50",
+		    close: true
+	    }).showToast();
+		
         localStorage.setItem("panier", JSON.stringify(panier));
 
     } catch (error) {

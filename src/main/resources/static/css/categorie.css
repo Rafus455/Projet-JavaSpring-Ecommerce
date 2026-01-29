@@ -345,21 +345,20 @@ footer p {
         grid-template-columns: 1fr;
     }
  
- .product-badge {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-     background-color: #2ecc71;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-    z-index: 2;
-}
+    .product-badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: #2ecc71;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        z-index: 2;
+    }
 
-.product-badge.out {
-            background-color: #e74c3c !important;
-}
-   
+    .product-badge.out {
+        background-color: #e74c3c !important;
+    }
 }

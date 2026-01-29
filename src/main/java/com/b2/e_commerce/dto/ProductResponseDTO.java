@@ -14,7 +14,7 @@ public class ProductResponseDTO {
     private String categoryName;
     private Long categoryId;
     private LocalDateTime createdAt;
-    
+    private boolean active;
 
     public ProductResponseDTO() {}
 
@@ -104,5 +104,12 @@ public class ProductResponseDTO {
             return false;
         }
        return this.createdAt.isAfter(LocalDateTime.now().minusDays(1));
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

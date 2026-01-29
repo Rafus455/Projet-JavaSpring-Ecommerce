@@ -3,6 +3,8 @@ package com.b2.e_commerce.controller.REST;
 import com.b2.e_commerce.dto.OrderItemRequestDTO;
 import com.b2.e_commerce.entity.OrderItem;
 import com.b2.e_commerce.service.OrderItemService;
+import java.util.List;
+
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,12 @@ public class OrderItemController {
         this.orderItemService = orderItemService;
     }
 
+    // GET ALL ITEMS BY ORDER ID
+    @GetMapping
+    public List<OrderItem> getItemsByOrderId(@RequestParam Long orderId) {
+        return orderItemService.getItemsByOrderId(orderId);
+    }
+    
     // CREATE
     @PostMapping
     public OrderItem addItemToOrder(@Valid @RequestBody OrderItemRequestDTO dto) {

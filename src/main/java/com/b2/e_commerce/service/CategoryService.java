@@ -15,13 +15,16 @@ import com.b2.e_commerce.repository.CategoryRepository;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final com.b2.e_commerce.repository.ProductRepository productRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository,
+                           com.b2.e_commerce.repository.ProductRepository productRepository) {
         this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
     }
 
     public List<CategoryResponseDTO> findAll() {
-        return categoryRepository.findAll()
+        return categoryRepository.findByActiveTrue()
             .stream()
             .map(this::mapToResponse)
             .collect(Collectors.toList());
@@ -40,6 +43,8 @@ public class CategoryService {
     	category.setDescription(dto.getDescription());
     	category.setType(dto.getType());
 
+    	category.setActive(true);
+
     	Category saved = categoryRepository.save(category);
         return mapToResponse(saved);
     }
@@ -52,6 +57,8 @@ public class CategoryService {
     	category.setDescription(dto.getDescription());
     	category.setType(dto.getType());
 
+    	category.setActive(true);
+
     	Category saved = categoryRepository.save(category);
         return mapToResponse(saved);
     }
@@ -59,6 +66,12 @@ public class CategoryService {
     public void delete(Long id) {
         Category category = categoryRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Category avec id " + id + " introuvable") );
+
+        if (!productRepository.findByCategoryAndActiveTrue(category).isEmpty()) {
+            category.setActive(false);
+            categoryRepository.save(category);
+            return;
+        }
 
         categoryRepository.delete(category);
     }
@@ -69,6 +82,7 @@ public class CategoryService {
         dto.setName(category.getName());
         dto.setDescription(category.getDescription());
         dto.setType(category.getType());
+        dto.setActive(Boolean.TRUE.equals(category.isActive()));
         return dto;
     }
 }

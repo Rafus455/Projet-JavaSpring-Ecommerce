@@ -12,6 +12,7 @@ public class Category {
     private String name;
     private String description;
     private String type;
+    private Boolean active = Boolean.TRUE;
     
     // GETTERS
     public Long getId() {
@@ -30,6 +31,10 @@ public class Category {
         return type;
     }
 
+    public Boolean isActive() {
+        return active;
+    }
+
     // SETTERS
     public void setId(Long id) {
         this.id = id;
@@ -45,5 +50,9 @@ public class Category {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }
