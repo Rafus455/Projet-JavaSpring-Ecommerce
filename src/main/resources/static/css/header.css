@@ -69,3 +69,14 @@
             transform: scale(1.1);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
+
+.actions .icon img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    display: block;
+}
+
+#admin-link .icon {
+    border: 1px solid rgba(0,0,0,0.08);
+}

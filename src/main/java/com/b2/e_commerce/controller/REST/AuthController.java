@@ -18,6 +18,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -108,6 +111,24 @@ public class AuthController {
         response.addCookie(jwtCookie);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> me(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
+            return ResponseEntity.status(401).body(Map.of("authenticated", false));
+        }
+
+        String username = authentication.getName();
+        String role = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .findFirst().orElse(null);
+
+        return ResponseEntity.ok(Map.of(
+                "authenticated", true,
+                "username", username,
+                "role", role
+        ));
     }
 }
 

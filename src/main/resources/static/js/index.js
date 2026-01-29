@@ -34,6 +34,21 @@ function shuffle(arr) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    fetch('/api/auth/me', { credentials: 'same-origin' })
+        .then(r => {
+            if (!r.ok) return null;
+            return r.json();
+        })
+        .then(data => {
+            if (!data) return;
+            const role = data.role || '';
+            if (typeof role === 'string' && role.toUpperCase().includes('ADMIN')) {
+                const el = document.getElementById('admin-link');
+                if (el) el.style.display = '';
+            }
+        })
+        .catch(() => {});
+
     const nouveautesContainer = document.getElementById('nouveautes');
     const bestContainer = document.getElementById('best-items');
 

@@ -14,6 +14,11 @@
             </nav>
 
             <div class="actions">
+                <a th:href="@{/admin/dashboard}" id="admin-link" th:style="${isAdmin} ? '' : 'display:none;'" >
+                 	<div class="icon">
+                		<img th:src="@{/images/admin.png}" alt="Admin">
+                	</div>
+                </a>
                 <a th:href="@{/account}">
                 	<div class="icon">
                 		<img th:src="@{/images/user.png}" alt="Utilisateur">
@@ -27,3 +32,26 @@
             </div>
         </div>
 </header>
+
+<script>
+;(function(){
+    try {
+        const token = localStorage.getItem('jwt');
+        if (!token) return;
+        const parts = token.split('.');
+        if (parts.length !== 3) return;
+        const payload = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+        const pad = payload.length % 4;
+        const padded = payload + (pad ? '='.repeat(4 - pad) : '');
+        const json = JSON.parse(atob(padded));
+        const role = json.role || json.Roles || json.roles;
+        if (!role) return;
+        if (typeof role === 'string' && role.toUpperCase().includes('ADMIN')) {
+            const el = document.getElementById('admin-link');
+            if (el) el.style.display = '';
+        }
+    } catch (e) {
+
+    }
+})();
+</script>
