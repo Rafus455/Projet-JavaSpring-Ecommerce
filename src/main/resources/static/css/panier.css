@@ -160,6 +160,41 @@
             align-items: center;
             transition: all 0.3s ease;
         }
+        
+        .cart-item-price-container {
+		    display: flex;
+		    flex-direction: column;
+		    align-items: flex-end;
+		}
+		
+		.cart-old-price {
+		    text-decoration: line-through;
+		    color: #999;
+		    font-size: 13px;
+		    margin-bottom: 2px;
+		}
+		
+		.cart-new-price {
+		    color: #ff4757;
+		    font-weight: bold;
+		    font-size: 16px;
+		}
+		
+		.cart-standard-price {
+		    font-weight: bold;
+		    color: #333;
+		    font-size: 16px;
+		}
+		
+		.cart-badge-sale {
+		    background-color: #ff4757;
+		    color: white;
+		    font-size: 10px;
+		    padding: 2px 6px;
+		    border-radius: 10px;
+		    margin-right: 5px;
+		    font-weight: bold;
+		}
 
         .cart-item:hover {
             box-shadow: 0 6px 20px rgba(0,0,0,0.15);

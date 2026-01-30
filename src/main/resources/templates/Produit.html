@@ -114,7 +114,6 @@
 
             <div class="action-buttons">
 
-                <!-- BOUTON AJOUTER AU PANIER -->
                 <button class="add-to-cart-btn" th:data-id="${product.id}" th:data-name="${product.name}"
                     th:data-category="${product.categoryName}"
                     th:data-price="${product.onSale > 0 ? (product.price - (product.price * product.onSale / 100.0)) : product.price}"
@@ -123,7 +122,6 @@
                     th:style="${product.stock == 0} ? 'opacity: 0.5; cursor: not-allowed;' : ''"> 🛒 Ajouter au panier
                 </button>
 
-                <!-- BOUTON ACHETER MAINTENANT -->
                 <button class="buy-now-btn" th:data-id="${product.id}" th:data-name="${product.name}"
                     th:data-category="${product.categoryName}"
                     th:data-price="${product.onSale > 0 ? (product.price - (product.price * product.onSale / 100.0)) : product.price}"
