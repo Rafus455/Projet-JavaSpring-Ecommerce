@@ -75,6 +75,12 @@
 			               th:checked="${param.rupture != null}"> 
 			        Rupture de stock
 			    </label>
+			    <label>
+			        <input type="checkbox" name="promotion" 
+			               value="true" 
+			               th:checked="${param.promotion != null}"> 
+			        Promotion
+			    </label>
 			</div>
 	
 	        <button type="submit" class="apply-filters-btn">Appliquer les filtres</button>
@@ -96,12 +102,12 @@
 			    <label>Trier par :</label>  
 			    <select onchange="if (this.value) window.location.href=this.value">
 			       			        
-			        <option th:value="@{/categorie/id/{id}(id=${category.id}, sort='asc', min=${param.min}, max=${param.max}, nouveau=${param.nouveau}, rupture=${param.rupture})}"
+			         <option th:value="@{/categorie/id/{id}(id=${category.id}, sort='asc', min=${param.min}, max=${param.max}, nouveau=${param.nouveau}, rupture=${param.rupture}, promotion=${param.promotion})}"
 			                th:selected="${param.sort != null and param.sort[0] == 'asc'}">
 			            Prix croissant
 			        </option>
 			        
-			        <option th:value="@{/categorie/id/{id}(id=${category.id}, sort='desc', min=${param.min}, max=${param.max}, nouveau=${param.nouveau}, rupture=${param.rupture})}"
+			        <option th:value="@{/categorie/id/{id}(id=${category.id}, sort='desc', min=${param.min}, max=${param.max}, nouveau=${param.nouveau}, rupture=${param.rupture}, promotion=${param.promotion})}"
 			                th:selected="${param.sort != null and param.sort[0] == 'desc'}">
 			            Prix décroissant
 			        </option>

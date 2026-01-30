@@ -32,21 +32,21 @@ public class CategoryController {
 
     @GetMapping("/{name}")
     public String category(@PathVariable String name, Model model, Authentication authentication) {
-    	return authService.getAuthenticatedUser(authentication)
-	        .map(user -> {
-	        	Category category = categoryRepo.findByNameIgnoreCase(name);
-	            if (category == null) {
-	                return "404"; 
-	            }
-	
-	            model.addAttribute("category", category);
-	            List<Product> products = productRepo.findByCategory(category);
-	            model.addAttribute("products", products);
-	            model.addAttribute("allCategories", categoryRepo.findAll());
-	
-	            return "categorie";
-	        })
-	        .orElse("redirect:/logout");
+        return authService.getAuthenticatedUser(authentication)
+            .map(user -> {
+                Category category = categoryRepo.findByNameIgnoreCase(name);
+                if (category == null) {
+                    return "redirect:/";
+                }
+    
+                model.addAttribute("category", category);
+                List<Product> products = productRepo.findByCategory(category);
+                model.addAttribute("products", products);
+                model.addAttribute("allCategories", categoryRepo.findAll());
+    
+                return "categorie";
+            })
+            .orElse("redirect:/logout");
     }
 
     @GetMapping("/id/{id}")
@@ -55,6 +55,7 @@ public class CategoryController {
                                 @RequestParam(required = false) Double max,
                                 @RequestParam(required = false) Boolean nouveau,
                                 @RequestParam(required = false) Boolean rupture,
+                                @RequestParam(required = false) Boolean promotion,
                                 @RequestParam(required = false) String sort,
                                 Model model) {
 
@@ -77,11 +78,23 @@ public class CategoryController {
         if (Boolean.TRUE.equals(nouveau)) {
             stream = stream.filter(Product::isNew);
         }
+        
+        if (Boolean.TRUE.equals(promotion)) {
+            stream = stream.filter(p -> p.getOnSale() > 0);
+        }
 
         if ("asc".equals(sort)) {
-            stream = stream.sorted((p1, p2) -> Double.compare(p1.getPrice(), p2.getPrice()));
+            stream = stream.sorted((p1, p2) -> {
+                double price1 = (p1.getOnSale() > 0) ? p1.getPrice() * (1 - p1.getOnSale()/100.0) : p1.getPrice();
+                double price2 = (p2.getOnSale() > 0) ? p2.getPrice() * (1 - p2.getOnSale()/100.0) : p2.getPrice();
+                return Double.compare(price1, price2);
+            });
         } else if ("desc".equals(sort)) {
-            stream = stream.sorted((p1, p2) -> Double.compare(p2.getPrice(), p1.getPrice()));
+            stream = stream.sorted((p1, p2) -> {
+                double price1 = (p1.getOnSale() > 0) ? p1.getPrice() * (1 - p1.getOnSale()/100.0) : p1.getPrice();
+                double price2 = (p2.getOnSale() > 0) ? p2.getPrice() * (1 - p2.getOnSale()/100.0) : p2.getPrice();
+                return Double.compare(price2, price1);
+            });
         }
 
         products = stream.collect(Collectors.toList());
@@ -91,7 +104,7 @@ public class CategoryController {
         
         model.addAttribute("minPrice", minPrice);
         model.addAttribute("maxPrice", maxPrice);
-        model.addAttribute("sort", sort); 
+        model.addAttribute("sort", sort);
 
         return "categorie";
     }

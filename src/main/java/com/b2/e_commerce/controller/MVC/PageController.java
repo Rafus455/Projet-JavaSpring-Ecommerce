@@ -35,11 +35,6 @@ public class PageController {
         return "register";
     }
 
-    @GetMapping("/ordinateur")
-    public String ordinateur() {
-        return "Ordinateur";
-    }
-
     @GetMapping("/account")
     public String account(Authentication authentication, Model model) {
 
@@ -68,12 +63,16 @@ public class PageController {
     }
     
     @GetMapping("/produit/{id}")
-    public String produit(@PathVariable Long id, Model model) {
-    	ProductResponseDTO product = productService.findById(id);
+    public String produit(Authentication authentication, @PathVariable Long id, Model model) {
+    	return authService.getAuthenticatedUser(authentication)
+    	        .map(user -> {
 
-        model.addAttribute("product", product);
-        model.addAttribute("category", product.getCategoryName());
+    	        	ProductResponseDTO product = productService.findById(id);
 
-        return "produit";
+    	            model.addAttribute("product", product);
+    	            model.addAttribute("category", product.getCategoryName());
+    	            return "produit";
+    	        })
+    	        .orElse("redirect:/logout");
     }
 }
